@@ -1,0 +1,274 @@
+/* Tufte CSS-inspired theme for Slidev
+ * Adapted from https://edwardtufte.github.io/tufte-css/
+ */
+
+:root {
+  --tufte-bg: #fffff8;
+  --tufte-text: #111111;
+  --tufte-muted: #555555;
+  --tufte-rule: #333333;
+  --tufte-accent: #c14a26; /* Tufte's red-brown for marks */
+  --tufte-link: #1b1b1b;
+  --tufte-code-bg: #f5f5e9;
+  --tufte-serif: "et-book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --tufte-mono: "IBM Plex Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+/* Page background and base typography */
+.slidev-layout,
+.slidev-page {
+  background-color: var(--tufte-bg) !important;
+  background-image: none !important;
+  color: var(--tufte-text);
+  font-family: var(--tufte-serif);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  padding: 1.6rem 2.6rem;
+}
+
+/* The cover slide should also use the cream background */
+.slidev-layout.cover,
+.slidev-layout.intro {
+  background-color: var(--tufte-bg) !important;
+  background-image: none !important;
+  color: var(--tufte-text);
+}
+
+/* Headings: serif, no bold, slight letter-spacing */
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3,
+.slidev-layout h4,
+.slidev-layout h5,
+.slidev-layout h6 {
+  font-family: var(--tufte-serif);
+  color: var(--tufte-text);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.01em;
+  -webkit-text-fill-color: currentColor;
+  background: none !important;
+}
+
+.slidev-layout h1 {
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+}
+
+.slidev-layout h2 {
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin-top: 1.2rem;
+  margin-bottom: 0.6rem;
+  font-weight: 400;
+}
+
+.slidev-layout h3 {
+  font-style: italic;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.slidev-layout h4,
+.slidev-layout h5,
+.slidev-layout h6 {
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+}
+
+/* Body text */
+.slidev-layout p,
+.slidev-layout li {
+  font-family: var(--tufte-serif);
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--tufte-text);
+}
+
+/* Emphasis */
+.slidev-layout em,
+.slidev-layout i {
+  font-style: italic;
+}
+.slidev-layout strong,
+.slidev-layout b {
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Links: subtle underline, no color shift */
+.slidev-layout a,
+.slidev-layout a:visited {
+  color: var(--tufte-link);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.4);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+.slidev-layout a:hover {
+  border-bottom-color: var(--tufte-accent);
+  color: var(--tufte-accent);
+}
+
+/* Lists */
+.slidev-layout ul,
+.slidev-layout ol {
+  padding-left: 1.4em;
+}
+.slidev-layout li + li {
+  margin-top: 0.35rem;
+}
+
+/* Blockquotes — Tufte style: italic, sourced */
+.slidev-layout blockquote {
+  font-style: italic;
+  border-left: 2px solid var(--tufte-rule);
+  padding: 0.2em 0 0.2em 1em;
+  margin: 1em 0;
+  color: var(--tufte-muted);
+}
+
+/* Horizontal rule — thin, restrained */
+.slidev-layout hr {
+  border: none;
+  border-top: 1px solid var(--tufte-rule);
+  margin: 1.5rem 0;
+}
+
+/* Tables — Tufte tables are minimal: no vertical rules, sparse horizontals */
+.slidev-layout table {
+  border-collapse: collapse;
+  font-family: var(--tufte-serif);
+  font-size: 1rem;
+  margin: 1rem 0;
+  width: auto;
+}
+.slidev-layout table th {
+  font-weight: 400;
+  font-style: italic;
+  border-bottom: 1px solid var(--tufte-rule);
+  border-top: 1px solid var(--tufte-rule);
+  padding: 0.4rem 0.9rem;
+  text-align: left;
+}
+.slidev-layout table td {
+  border: none;
+  padding: 0.35rem 0.9rem;
+}
+.slidev-layout table tr:last-child td {
+  border-bottom: 1px solid var(--tufte-rule);
+}
+
+/* Inline code — Tufte style: monospace, slightly smaller, no background chip,
+ * sits in the text rather than as a pill. The default theme ships a chip
+ * via .slidev-layout :not(pre) > code; we override it with !important since
+ * theme styles use higher specificity. */
+.slidev-layout :not(pre) > code,
+.slidev-layout code {
+  font-family: var(--tufte-mono) !important;
+  font-size: 0.85em !important;
+  line-height: 1.42 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: inherit !important;
+}
+/* Block code — Tufte keeps code restrained: same cream as the page,
+ * a thin left rule, no rounded chrome. */
+.slidev-layout pre,
+.slidev-layout pre code,
+.slidev-layout .shiki,
+.slidev-layout .slidev-code {
+  font-family: var(--tufte-mono) !important;
+  background-color: transparent !important;
+  font-size: 0.72rem;
+  line-height: 1.42;
+  border-radius: 0;
+}
+.slidev-layout pre {
+  padding: 0.4rem 0;
+  border-left: none;
+  background-color: transparent;
+}
+/* Block code inside a pre keeps inherited line-height; inline code
+ * inside a paragraph stays inline, no pre-style padding leak. */
+.slidev-layout p code,
+.slidev-layout li code,
+.slidev-layout h1 code,
+.slidev-layout h2 code,
+.slidev-layout h3 code,
+.slidev-layout h4 code {
+  font-size: 0.85em;
+}
+
+/* Keyboard keys — match the restrained aesthetic */
+.slidev-layout kbd {
+  font-family: var(--tufte-mono);
+  background: var(--tufte-bg);
+  border: 1px solid var(--tufte-rule);
+  border-radius: 2px;
+  padding: 0.05em 0.4em;
+  font-size: 0.85em;
+  box-shadow: none;
+}
+
+/* Marks (Slidev v-mark) — use Tufte's red-brown */
+.slidev-vclick-target,
+.slidev-layout mark {
+  color: inherit;
+}
+
+/* The cover/title slide centerpiece */
+.slidev-layout.cover h1,
+.slidev-layout.intro h1 {
+  font-size: 2.6rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Constrain content height — overflow on long slides scrolls within */
+.slidev-layout {
+  overflow: auto;
+}
+
+/* Tighten paragraph spacing inside content-heavy slides */
+.slidev-layout p {
+  margin: 0.4rem 0;
+}
+.slidev-layout ul,
+.slidev-layout ol {
+  margin: 0.4rem 0;
+}
+
+/* Remove gradient / fancy heading overrides from slide-scope <style> blocks
+ * by neutralizing the text-fill trick */
+.slidev-layout h1,
+.slidev-layout h2 {
+  -webkit-text-fill-color: var(--tufte-text);
+  -moz-text-fill-color: var(--tufte-text);
+}
+
+/* Footer / footnotes */
+.slidev-layout .footnotes {
+  font-size: 0.85rem;
+  color: var(--tufte-muted);
+  font-style: italic;
+}
+
+/* Slide numbers and small UI text */
+.slidev-page footer,
+.slidev-page .slidev-page-number {
+  font-family: var(--tufte-serif);
+  color: var(--tufte-muted);
+}
+
+/* Drop the dark theme accents from seriph by softening borders */
+.slidev-layout .border-main,
+.slidev-layout [class*="border-primary"] {
+  border-color: var(--tufte-rule) !important;
+}
