@@ -16,44 +16,22 @@ duration: 35min
 
 <div class="relative mx-auto w-48">
   <img src="/paxton.png" class="w-full" alt="Paxton" />
-  <div class="stamp">Powered<br/>by Rust</div>
 </div>
 
-<style scoped>
-.stamp {
-  position: absolute;
-  top: 18%;
-  right: -1.6rem;
-  transform: rotate(-14deg);
-  padding: 0.25rem 0.7rem;
-  border: 2px solid var(--tufte-accent);
-  color: var(--tufte-accent);
-  font-family: var(--tufte-serif);
-  font-style: italic;
-  font-size: 0.85rem;
-  line-height: 1.05;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  background: rgba(255, 255, 248, 0.6);
-  opacity: 0.85;
-  pointer-events: none;
-  text-align: center;
-}
-</style>
 
 # Introducing Pixi
 
 ## Package Management, conda, and Rust 
 
-Tim de Jager · <a href="https://prefix.dev">prefix.dev</a>
+Tim de Jager at <img src="/prefix-logo.svg" class="inline align-middle h-5 mx-1" alt="prefix.dev" />
 
 
 ---
 
 # Who am I?
 
-<img src="/tim.jpeg" class="absolute right-12 top-24 w-44 rounded-full" alt="Tim" />
 
+<img src="/tim.jpeg" class="absolute right-24 top-24 w-44 rounded-full" alt="Tim" />
 <div class="absolute right-12 bottom-24 w-72 h-44">
   <img v-click="[1, 2]" src="/reus.jpg" class="absolute inset-0 w-full h-full object-contain rounded shadow" alt="Reus" />
   <img v-click="[2, 3]" src="/smart-robotics.jpg" class="absolute inset-0 w-full h-full object-contain rounded shadow" alt="Smart Robotics" />
@@ -194,7 +172,7 @@ Frame conda as a generic native-package system. The talk's earlier
 
 # How conda-forge ships a package
 
-<div class="cf-stage relative mt-6">
+<div class="cf-stage cf-ships-slide relative mt-6">
 
 <img src="./assets/conda-forge-flow.svg" class="w-full" alt="conda-forge flow" />
 
@@ -228,16 +206,27 @@ requirements:
 <style scoped>
 .recipe-overlay {
   position: absolute;
-  top: 8%;
-  left: 32%;
-  width: 56%;
+  top: 4%;
+  left: 30%;
+  width: 60%;
   transform: rotate(-2deg);
   background: var(--tufte-bg);
   border: 1px solid var(--tufte-rule);
   border-radius: 3px;
   padding: 0.4rem 0.9rem;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.12);
-  font-size: 0.78rem;
+  font-size: 0.7rem;
+  max-height: none;
+  overflow: visible;
+}
+.recipe-overlay pre,
+.recipe-overlay code,
+.recipe-overlay .shiki,
+.recipe-overlay .slidev-code {
+  max-height: none !important;
+  overflow: visible !important;
+  white-space: pre !important;
+  line-height: 1.25 !important;
 }
 .recipe-overlay::after {
   content: "";
@@ -261,6 +250,14 @@ requirements:
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
+}
+</style>
+
+<style>
+/* Disable the theme's slide-scoped overflow scroll for this one slide so
+ * the rotated recipe card can extend past the SVG without being clipped. */
+.slidev-layout:has(.cf-ships-slide) {
+  overflow: visible !important;
 }
 </style>
 
@@ -462,13 +459,13 @@ exposed = { btop = "btop" }
 - conda-forge has compilers for loads of languages: C++, Rust, R, Fortran etc.
 - Normally conda-forge packages are binary.
 - We have `pixi build`: *source directory* into a conda package
-- One **backend** per language: 
-  - `pixi-build-rust`, 
-  - `pixi-build-cmake`, 
-  - `pixi-build-python`, 
-  - `pixi-build-rattler-build`
+- One **backend** per language
 
 </v-clicks>
+
+<div v-click class="mt-4">
+<img src="./assets/pixi-multilang-flow.svg" class="w-full" alt="pixi multi-language build flow" />
+</div>
 
 <!--
 Source → conda package, language-specific backend, one lock.

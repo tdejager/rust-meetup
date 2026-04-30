@@ -99,27 +99,57 @@
   font-style: italic;
 }
 
-/* Links: subtle underline, no color shift */
+/* Links — Tufte uses inherit color with a thin offset underline rather
+ * than a border, so the underline sits below descenders cleanly. */
 .slidev-layout a,
+.slidev-layout a:link,
 .slidev-layout a:visited {
-  color: var(--tufte-link);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.4);
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.1em;
+  text-decoration-thickness: 0.05em;
   background: none;
   -webkit-text-fill-color: currentColor;
 }
 .slidev-layout a:hover {
-  border-bottom-color: var(--tufte-accent);
   color: var(--tufte-accent);
+  text-decoration-color: var(--tufte-accent);
 }
 
-/* Lists */
-.slidev-layout ul,
-.slidev-layout ol {
-  padding-left: 1.4em;
+/* Lists — ported from edwardtufte/tufte-css. UnoCSS preflight strips
+ * list-style and display, so restore them explicitly. The hanging-indent
+ * (negative margin + matching padding) puts the bullet text in line with
+ * the heading text, with the marker hanging in the slide's left padding. */
+.slidev-layout ol,
+.slidev-layout ul {
+  font-size: 1rem;
+  line-height: 1.45;
+  padding-inline-start: 1.2em;
+  margin-inline-start: -1.2em;
 }
-.slidev-layout li + li {
-  margin-top: 0.35rem;
+/* Hollow markers (Butterick: "more subtle than solid bullets") and a
+ * smaller, muted marker color. ol uses old-style figures from the
+ * et-book companion face for the indices. */
+.slidev-layout ul {
+  list-style: circle outside;
+}
+.slidev-layout ol {
+  list-style: decimal outside;
+}
+.slidev-layout li {
+  display: list-item;
+  padding-left: 0;
+}
+.slidev-layout li::marker {
+  color: var(--tufte-muted);
+  font-size: 0.85em;
+}
+.slidev-layout ol > li::marker {
+  font-family: "et-book-roman-old-style", var(--tufte-serif);
+  font-size: 0.95em;
+}
+.slidev-layout li:not(:first-child) {
+  margin-top: 0.25rem;
 }
 
 /* Blockquotes — Tufte style: italic, sourced */
@@ -258,6 +288,80 @@
   font-size: 0.85rem;
   color: var(--tufte-muted);
   font-style: italic;
+}
+
+/* Tufte utility classes — ported from edwardtufte/tufte-css.
+ * Use as: <span class="newthought">…</span>, <p class="subtitle">…</p>, etc. */
+
+/* Subtitle: italic display line, used under a title heading */
+.slidev-layout p.subtitle,
+.slidev-layout .subtitle {
+  font-style: italic;
+  font-size: 1.4rem;
+  line-height: 1.1;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* New-thought lead-in: small caps + slight upsize, the Tufte hallmark
+ * for opening sentences. */
+.slidev-layout .newthought {
+  font-variant: small-caps;
+  font-size: 1.2em;
+  letter-spacing: 0.03em;
+}
+
+/* Sans utility — "Gill Sans"-flavored, used for tables and asides */
+.slidev-layout .sans {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  letter-spacing: 0.03em;
+}
+
+/* Danger / accent text */
+.slidev-layout .danger {
+  color: var(--tufte-accent);
+}
+
+/* Figure + caption — Tufte floats the caption to the right of its figure,
+ * keeping the image narrower than the text measure. */
+.slidev-layout figure {
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  max-width: 100%;
+  margin: 0 0 1.5rem 0;
+}
+.slidev-layout figcaption {
+  float: right;
+  clear: right;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  font-style: italic;
+  color: var(--tufte-muted);
+  max-width: 40%;
+}
+.slidev-layout figure.fullwidth figcaption {
+  margin-right: 0;
+  max-width: none;
+  float: none;
+}
+
+/* Fullwidth utility for tables / figures that should break the measure */
+.slidev-layout .fullwidth {
+  max-width: 100%;
+  width: 100%;
+  clear: both;
+}
+
+/* Code inside headings — Tufte sizes it down to 0.80em */
+.slidev-layout h1 > code,
+.slidev-layout h2 > code,
+.slidev-layout h3 > code {
+  font-size: 0.8em !important;
 }
 
 /* Slide numbers and small UI text */
