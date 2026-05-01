@@ -1,0 +1,16 @@
+[workspace]
+channels = ["conda-forge"]
+name = "rust-meetup"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[dependencies]
+pnpm = "*"
+nodejs = "*"
+
+[tasks]
+install = { cmd = "pnpm install --frozen-lockfile", description = "Install JS dependencies via pnpm" }
+dev     = { cmd = "pnpm exec slidev --open",        depends-on = ["install"], description = "Run the Slidev dev server" }
+build   = { cmd = "pnpm exec slidev build",         depends-on = ["install"], description = "Build the static deck into ./dist" }
+export  = { cmd = "pnpm exec slidev export",        depends-on = ["install"], description = "Export the deck to PDF" }
+preview = { cmd = "pnpm exec vite preview dist",    depends-on = ["build"],   description = "Serve the built deck locally" }

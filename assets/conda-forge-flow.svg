@@ -7,7 +7,7 @@
       .box  { fill: #fffff8; stroke: #333; stroke-width: 1.4; }
       .link { stroke: #c14a26; stroke-width: 1.6; fill: none; }
       .head { font: italic 17px Georgia, "et-book", serif; fill: #111; text-anchor: middle; }
-      .sub  { font: 11px "IBM Plex Mono", Consolas, monospace; fill: #555; text-anchor: middle; }
+      .sub  { font: 10px "IBM Plex Mono", Consolas, monospace; fill: #555; text-anchor: middle; }
       .edge { font: italic 12px Georgia, "et-book", serif; fill: #c14a26; text-anchor: middle; }
     </style>
   </defs>
@@ -30,7 +30,7 @@
 
   <!-- recipe drives the build -->
   <path class="link" d="M 240 260 C 320 260 340 195 420 195" marker-end="url(#cf-arr-accent)" />
-  <text class="edge" x="335" y="240">build</text>
+  <text class="edge" x="350" y="240">build</text>
 
   <g>
     <rect class="box" x="420" y="140" width="220" height="100" rx="4" />
@@ -43,13 +43,13 @@
   <text class="edge" x="705" y="180">produces</text>
 
   <g>
-    <rect class="box" x="770" y="140" width="180" height="100" rx="4" />
+    <rect class="box" x="770" y="140" width="210" height="100" rx="4" />
     <text class="head" x="860" y="172">.conda</text>
-    <text class="sub"  x="860" y="197">numpy-2.3-h0.conda</text>
-    <text class="sub"  x="860" y="215">btop-1.4.5-h0.conda</text>
+    <text class="sub"  x="870" y="197">win-64/numpy-2.3-h0.conda</text>
+    <text class="sub"  x="870" y="215">osx-arm64/btop-1.4.5-h0.conda</text>
   </g>
 
-  <path class="link" d="M 950 190 L 1060 190" marker-end="url(#cf-arr-accent)" />
+  <path class="link" d="M 980 190 L 1060 190" marker-end="url(#cf-arr-accent)" />
   <text class="edge" x="1005" y="180">publish</text>
 
   <g transform="translate(1060, 145)">

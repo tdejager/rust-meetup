@@ -7,3 +7,6 @@ dist
 components.d.ts
 .playwright-cli/**
 .playwright/**
+# pixi environments
+.pixi/*
+!.pixi/config.toml

@@ -143,11 +143,11 @@
 }
 .slidev-layout li {
     display: list-item;
-    padding-left: 0;
+    padding-left: 0.1em;
 }
 .slidev-layout ul > li::marker {
     font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-    font-size: 0.7em;
+    font-size: 0.8em;
 }
 .slidev-layout li:not(:first-child) {
     margin-top: 0.25rem;

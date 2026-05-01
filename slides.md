@@ -80,13 +80,99 @@ layout: center
 
 </v-clicks>
 
+<div class="testimonials absolute right-12 top-28 w-[28rem] flex flex-col gap-3">
+
+  <a v-click="5" href="https://github.com/prefix-dev/pixi/issues/1128" class="testimonial">
+    <img src="https://avatars.githubusercontent.com/u/22605641?v=4" alt="Ben-Epstein" />
+    <div class="body">
+      <p>"Thanks for the awesome package and work! I'd love for pixi to become my go-to package manager, the python ecosystem really needs it."</p>
+      <footer>— <strong>Ben-Epstein</strong> · <span>#1128</span></footer>
+    </div>
+  </a>
+
+  <a v-click="6" href="https://github.com/prefix-dev/pixi/issues/3457" class="testimonial">
+    <img src="https://avatars.githubusercontent.com/u/381141?v=4" alt="tringenbach" />
+    <div class="body">
+      <p>"I really like how pixi follows what I think of as the nodejs / <code>node_modules</code> pattern. I run <code>pixi install</code> and, thanks to the lock file, I get exactly what every other developer using pixi gets."</p>
+      <footer>— <strong>tringenbach</strong> · <span>#3457</span></footer>
+    </div>
+  </a>
+
+  <a v-click="7" href="https://github.com/prefix-dev/pixi/issues/5230" class="testimonial">
+    <img src="https://avatars.githubusercontent.com/u/67614381?v=4" alt="garylvov" />
+    <div class="body">
+      <p>"I'm looking forward to using Pixi this New Year! As always, I've been enjoying using Pixi on my project."</p>
+      <footer>— <strong>garylvov</strong> · <span>#5230</span></footer>
+    </div>
+  </a>
+
+</div>
+
+<style scoped>
+.testimonials .testimonial {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  padding: 0.7rem 0.8rem;
+  background: var(--tufte-bg);
+  border: 1px solid var(--tufte-rule);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  text-decoration: none !important;
+  color: inherit;
+  border-bottom: 1px solid var(--tufte-rule) !important;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.testimonials .testimonial:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  border-bottom-color: var(--tufte-accent) !important;
+}
+.testimonials .testimonial img {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+.testimonials .testimonial .body { flex: 1; }
+.testimonials .testimonial p {
+  font-style: italic;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--tufte-text);
+  margin: 0;
+}
+.testimonials .testimonial p code {
+  font-style: normal;
+  font-family: var(--tufte-mono) !important;
+  font-size: 0.85em !important;
+}
+.testimonials .testimonial footer {
+  font-size: 0.7rem;
+  color: var(--tufte-muted);
+  margin-top: 0.25rem;
+  font-style: normal;
+}
+.testimonials .testimonial footer strong {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--tufte-text);
+}
+.testimonials .testimonial footer span {
+  font-family: var(--tufte-mono);
+  font-size: 0.9em;
+}
+</style>
+
 ---
 
 # So what is Pixi?!
 
 <img src="/paxton.png" class="absolute right-12 w-64" alt="Paxton" />
 
-### Open Source on Github: https://github.com/prefix-dev/pixi
+### Open Source on Github: https://github.com/prefix-dev/pixi (7k)
 <br />
 <v-clicks>
 
@@ -590,6 +676,7 @@ exposed = { btop = "btop" }
 
 </v-clicks>
 
+
 <div v-click class="mt-4">
 <img src="./assets/pixi-multilang-flow.svg" class="w-full" alt="pixi multi-language build flow" />
 </div>
@@ -664,7 +751,119 @@ requirements:
 
 # How did we get here?
 
+<div v-click="1" class="absolute right-12 top-24 w-100 grid grid-cols-2 gap-3">
+  <img src="/smart-robotics.jpg" class="w-full h-44 object-cover rounded shadow" alt="Smart Robotics palletising robot" />
+  <img src="/smart-robotics-pick-place.jpg" class="w-full h-44 object-cover rounded shadow" alt="Smart Robotics pick-and-place robot" />
+</div>
+
+<v-clicks at="1">
+
+- Working at Smart Robotics
+- ROS1 Installations
+- Coupled to Ubuntu versions
+- This poses problems:
+
+</v-clicks>
+
+
+<div v-click="5" class="mt-12">
+
+## We could not debug older 
+## machines when switching to a new Ubuntu
+
+</div>
+<div v-click="6" class="mt-12">
+
+## I could not work together 
+## with other developers using a different ubuntu
+
+</div>
+
 ---
+
+# Found Conda & Mamba
+
+<v-clicks>
+
+- Conda packages are nice,
+
+- Robostack is distroless ROS
+- Conda was slow but Mamba was Fast!
+
+</v-clicks>
+
+
+---
+
+# Conda workflow is strange
+### at least for `cargo`, `npm`, etc. users
+
+<div class="grid grid-cols-2 gap-8 mt-4">
+
+<div>
+
+<v-clicks at="1">
+
+- Has the concept of "base" and "global" environments
+- "base" is always activated :(
+
+</v-clicks>
+<br />
+<v-clicks at="3">
+
+- `conda activate my-env`
+- `conda install foo` => into an env
+- No lock file != No Reproducibility per Project
+
+</v-clicks>
+
+</div>
+
+<div v-click="1">
+
+<FileTree
+  rootLabel="~/miniconda3/"
+  :tree="[
+    { name: 'envs', type: 'dir', comment: 'all your envs live here, globally', children: [
+      { name: 'base', type: 'dir', comment: 'always active' },
+      { name: 'ml-project', type: 'dir', comment: 'must remember `conda activate`' },
+      { name: 'tutorial', type: 'dir' },
+      { name: 'data-cleanup', type: 'dir' },
+    ]},
+    { name: 'pkgs', type: 'dir', comment: 'global package cache' },
+  ]"
+/>
+
+<div v-click="6" class="conda-shell mt-6">
+<pre><span class="prompt">(base) $</span> cd ml-project
+<span class="prompt">(base) $</span> <span class="cmd">conda activate ml-project</span>
+<span class="prompt">(ml-project) $</span> <span class="cmd">conda install pandas</span>
+<span class="prompt">(ml-project) $</span> python script.py
+<span class="prompt">(ml-project) $</span> deactivate
+<span class="prompt">(base) $</span> python script.py    <span class="oops"># oops — wrong env!</span></pre>
+</div>
+
+</div>
+
+</div>
+
+<style scoped>
+.conda-shell pre {
+  font-family: var(--tufte-mono);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  white-space: pre;
+}
+.conda-shell .prompt { color: var(--tufte-muted); }
+.conda-shell .cmd    { color: var(--tufte-text); font-weight: 500; }
+.conda-shell .oops   { color: var(--tufte-accent); font-style: italic; }
+</style>
+
+---
+# This is converting the ecosystem to rust
 src: ./pages/converting-to-rust.md
 ---
 

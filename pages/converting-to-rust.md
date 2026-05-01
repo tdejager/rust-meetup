@@ -38,7 +38,7 @@
   <!-- 4. resolvo — Jul 2023, satellite to the right of rattler, with juggler Paxton -->
   <g v-click="4">
     <line x1="710" y1="100" x2="840" y2="100" class="link" />
-    <rect x="840" y="40" width="220" height="120" rx="4" class="box box--soft" />
+    <rect x="840" y="40" width="220" height="120" rx="4" class="box" />
     <text x="950" y="78" class="name">resolvo</text>
     <text x="950" y="102" class="role">CDCL SAT solver</text>
     <text x="950" y="120" class="role">Based on libsolv</text>
@@ -50,16 +50,16 @@
 
 <style scoped>
 .tree { font-family: var(--tufte-serif); }
-.tree .box       { fill: #fffff8; stroke: #333; stroke-width: 1.4; }
-.tree .box--soft { stroke: #888; }
+.tree .box       { fill: #fffff8; stroke: #333; stroke-width: 1.4; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.14)); }
+.tree .box--soft { stroke: #888; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1)); }
 .tree .name      { font: 26px "et-book", "et-book", serif; fill: #111; font-weight: bold; text-anchor: middle; }
 .tree .role      { fill: #555; text-anchor: middle; font-size: 12px; }
 .tree .when      { font: italic 13px "et-book", "et-book", serif; fill: #c14a26; text-anchor: middle; }
-.tree .link      { stroke: #c14a26; stroke-width: 1.4; fill: none; stroke-dasharray: 4 3; }
+.tree .link      { stroke: #c14a26; stroke-width: 1.4; fill: none; stroke-dasharray: 3 2; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1)); }
 
 /* Soft reveal on each click instead of an instant pop. */
 .tree g.slidev-vclick-target {
-  transition: opacity 600ms ease-out;
+  transition: opacity 400ms ease-out;
 }
 .tree g.slidev-vclick-hidden {
   opacity: 0;
