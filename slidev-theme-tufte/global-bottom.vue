@@ -32,6 +32,9 @@
 }
 
 .master-footer__page {
+  font-family: "et-book-roman-old-style", var(--tufte-serif);
+  font-style: normal;
   font-variant-numeric: oldstyle-nums;
+  letter-spacing: 0.02em;
 }
 </style>

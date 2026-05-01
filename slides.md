@@ -1,7 +1,7 @@
 ---
 # Tufte-inspired theme — extracted to ./slidev-theme-tufte
 theme: ./slidev-theme-tufte
-title: Package Management is Fun
+title: Introducing Pixi
 info: |
   ## Pixi & the Rust toolchain underneath
   Tim de Jager · prefix.dev
@@ -12,9 +12,10 @@ drawings:
 transition: slide-left
 comark: true
 duration: 35min
+highlighter: shiki
 ---
 
-<div class="relative mx-auto w-48">
+<div class="relative mx-auto w-64 mb-4">
   <img src="/paxton.png" class="w-full" alt="Paxton" />
 </div>
 
@@ -23,7 +24,9 @@ duration: 35min
 
 ## Package Management, conda, and Rust 
 
+<div class="mt-28">
 Tim de Jager at <img src="/prefix-logo.svg" class="inline align-middle h-5 mx-1" alt="prefix.dev" />
+</div>
 
 
 ---
@@ -33,20 +36,20 @@ Tim de Jager at <img src="/prefix-logo.svg" class="inline align-middle h-5 mx-1"
 
 <img src="/tim.jpeg" class="absolute right-24 top-24 w-44 rounded-full" alt="Tim" />
 <div class="absolute right-12 bottom-24 w-72 h-44">
-  <img v-click="[1, 2]" src="/reus.jpg" class="absolute inset-0 w-full h-full object-contain rounded shadow" alt="Reus" />
-  <img v-click="[2, 3]" src="/smart-robotics.jpg" class="absolute inset-0 w-full h-full object-contain rounded shadow" alt="Smart Robotics" />
-  <img v-click="[3, 4]" src="/prefix-logo.svg" class="absolute inset-0 w-full h-full object-contain" alt="prefix.dev" />
+  <img v-click="[4, 5]" src="/reus.jpg" class="absolute inset-0 w-full h-full object-contain rounded shadow" alt="Reus" />
+  <img v-click="[5, 6]" src="/smart-robotics.jpg" class="absolute inset-0 w-full h-full object-contain rounded shadow" alt="Smart Robotics" />
+  <img v-click="[6, 7]" src="/prefix-logo.svg" class="absolute inset-0 w-full h-full object-contain" alt="prefix.dev" />
+  <RiveAnimation v-click="7" src="/paxton_animation.riv" class="absolute inset-0 w-full h-full" />
 </div>
+
+<v-clicks depth="2">
 
 - Tim de Jager [github](https://github.com/tdejager)
 - Developer at <img src="/prefix-logo.svg" class="inline align-middle h-5 mx-1" alt="prefix.dev" />
 - Used to work at:
-
-<v-clicks>
-
-- Abbey Games (making games) with C++
-- Smart Robotics (making robots) with C++ and Python
-- .. Prefix.dev Rust and Package Managers
+  - Abbey Games (making games) with C++
+  - Smart Robotics (making robots) with C++ and Python
+  - .. Prefix.dev Rust and Package Managers
 
 </v-clicks>
 
@@ -69,6 +72,7 @@ layout: center
 # Why do I think its fun?
 
 - Working on package managers is a great enabler
+- Both algorithmic and more engineering problems
 - People are generally quite grateful
 - Active discord around ~250 members
 
@@ -91,13 +95,92 @@ layout: center
   - Data Science
   - etc.
 
+</v-clicks>
+
+<div v-click="6">
+
 ## I'll explain more of this in depth
 
-</v-clicks>
+</div>
 
 
 <!--
 Pain-point opener. Concrete: we built robots, the deploy story was a mess.
+-->
+
+---
+layout: two-cols
+---
+
+# Who's using `pixi`?
+
+### Some repositories on GitHub with a `pixi.toml`
+
+<div class="users-grid" :class="`clicks-${Math.min($clicks, 5)}`">
+
+| stars | repository | how they use it |
+|------:|:-----------|:-----------|
+| **73k** | [python/cpython](https://github.com/python/cpython/tree/main/Tools/pixi-packages) | Build Environment for compiling CPython |
+| **32k** | [numpy/numpy](https://github.com/numpy/numpy) | Dev environment for Contributors |
+| **31k** | [FreeCAD/FreeCAD](https://github.com/FreeCAD/FreeCAD) | 5-platform C++/Python build & task runner |
+| **26k** | [modular/modular](https://github.com/modular/modular) | recommended way to install MAX & Mojo |
+| **3.2k** | [NVIDIA/cuda-python](https://github.com/NVIDIA/cuda-python) | monorepo runner with CUDA 12 / 13 envs |
+
+</div>
+
+<style scoped>
+.users-grid table {
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+}
+.users-grid th { font-weight: 400; font-style: italic; }
+/* Each tbody row stays in the layout but starts muted, then brightens
+ * cumulatively as its matching logo appears (clicks 1–5). */
+.users-grid tbody tr {
+  color: var(--tufte-muted);
+  opacity: 0.4;
+  transition: opacity 250ms ease, color 250ms ease;
+}
+.users-grid tbody tr a { color: inherit; }
+.users-grid.clicks-1 tbody tr:nth-child(-n+1),
+.users-grid.clicks-2 tbody tr:nth-child(-n+2),
+.users-grid.clicks-3 tbody tr:nth-child(-n+3),
+.users-grid.clicks-4 tbody tr:nth-child(-n+4),
+.users-grid.clicks-5 tbody tr:nth-child(-n+5) {
+  color: var(--tufte-text);
+  opacity: 1;
+}
+.logo-cloud {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.logo-cloud img {
+  position: absolute;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
+}
+.logo-cloud .l-python  { top: 6%;  left: 18%; width: 32%; transform: rotate(-6deg); }
+.logo-cloud .l-numpy   { top: 12%; right: 6%; width: 38%; transform: rotate(4deg); }
+.logo-cloud .l-freecad { top: 42%; left: 6%;  width: 30%; transform: rotate(8deg); }
+.logo-cloud .l-modular { top: 50%; right: 14%; width: 22%; transform: rotate(-3deg); }
+.logo-cloud .l-nvidia  { bottom: 8%; left: 28%; width: 36%; transform: rotate(2deg); }
+</style>
+
+::right::
+
+<div class="logo-cloud">
+  <img v-click="1" src="/logos/python.svg"  class="l-python"  alt="Python" />
+  <img v-click="2" src="/logos/numpy.svg"   class="l-numpy"   alt="NumPy" />
+  <img v-click="3" src="/logos/freecad.svg" class="l-freecad" alt="FreeCAD" />
+  <img v-click="4" src="/logos/modular.svg" class="l-modular" alt="Modular" />
+  <img v-click="5" src="/logos/nvidia.svg"  class="l-nvidia"  alt="NVIDIA" />
+</div>
+
+<!--
+Counts pulled from a github code-search for `filename:pixi.toml`,
+deduped to ~500 repos, then queried via GraphQL for stargazerCount and
+sorted. Skipped prefix-dev/pixi itself and pixi-adjacent tooling.
 -->
 
 ---
@@ -176,7 +259,7 @@ Frame conda as a generic native-package system. The talk's earlier
 
 <img src="./assets/conda-forge-flow.svg" class="w-full" alt="conda-forge flow" />
 
-<div v-click="1" class="recipe-overlay">
+<RecipeCard v-click="1" side="left" side-offset="30%" top="4%" width="60%" font-size="0.7rem">
 
 ```yaml
 # recipe.yaml
@@ -200,62 +283,11 @@ requirements:
     - libcxx
 ```
 
-</div>
-</div>
+</RecipeCard>
 
-<style scoped>
-.recipe-overlay {
-  position: absolute;
-  top: 4%;
-  left: 30%;
-  width: 60%;
-  transform: rotate(-2deg);
-  background: var(--tufte-bg);
-  border: 1px solid var(--tufte-rule);
-  border-radius: 3px;
-  padding: 0.4rem 0.9rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.12);
-  font-size: 0.7rem;
-  max-height: none;
-  overflow: visible;
-}
-.recipe-overlay pre,
-.recipe-overlay code,
-.recipe-overlay .shiki,
-.recipe-overlay .slidev-code {
-  max-height: none !important;
-  overflow: visible !important;
-  white-space: pre !important;
-  line-height: 1.25 !important;
-}
-.recipe-overlay::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 18px;
-  height: 18px;
-  background: linear-gradient(
-    135deg,
-    var(--tufte-bg) 0%,
-    var(--tufte-bg) 50%,
-    rgba(0, 0, 0, 0.06) 50%,
-    rgba(0, 0, 0, 0.12) 100%
-  );
-  border-left: 1px solid var(--tufte-rule);
-  border-bottom: 1px solid var(--tufte-rule);
-}
-.recipe-overlay pre {
-  margin: 0;
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-}
-</style>
+</div>
 
 <style>
-/* Disable the theme's slide-scoped overflow scroll for this one slide so
- * the rotated recipe card can extend past the SVG without being clipped. */
 .slidev-layout:has(.cf-ships-slide) {
   overflow: visible !important;
 }
@@ -270,28 +302,31 @@ Say it in plain English while the diagram does the lifting.
 layout: two-cols
 ---
 
-# A `pixi.toml`, the basics
+# A `pixi.toml`: basics
 
 <br/>
 
 <v-clicks at="1">
 
-1. `pixi add python`
-2. `pixi add --feature test pytest`
-3. `pixi project environment add test --feature test`
-4. `pixi task add greet '...'`
-5. `pixi run greet` 
-6. `pixi run -e test pytest`
+1. *`pixi`*` add python`
+2. *`pixi`*` add --feature test pytest`
+3. *`pixi`*` project environment add test --feature test`
+4. *`pixi`*` task add greet '...'`
+5. *`pixi`*` run greet` 
+6. *`pixi`*` run -e test pytest`
 
 </v-clicks>
 
 <!--
-One slide, five clicks. Each click runs a real pixi command and the
-manifest on the right morphs to match. The final click swaps the
-manifest for the actual run output.
+One slide, six clicks. Each click runs a real pixi command and the
+manifest on the right morphs to match. The seventh click swaps the
+manifest for the file tree showing the two isolated environments pixi
+materialised on disk.
 -->
 
 ::right::
+
+<div v-click.hide="7">
 
 ````md magic-move {at:1, lines: true}
 ```toml
@@ -379,25 +414,92 @@ pytest 9.0.3
 ```
 ````
 
+</div>
+
+<div class="env-stack">
+
+<div v-click="[7, 8]" class="env-layer">
+
+<FileTree
+  rootLabel=".pixi/envs/"
+  :tree="[
+    { name: 'default', type: 'dir', comment: '`pixi run`', children: [
+      { name: 'bin', type: 'dir', children: [
+        { name: 'python', type: 'file' },
+        { name: 'pip', type: 'file' },
+      ]},
+      { name: 'conda-meta', type: 'dir', children: [
+        { name: 'python-3.14.4-h0_0.json', type: 'file' },
+      ]},
+      { name: 'lib/python3.14/site-packages/', type: 'dir' },
+      { name: 'include/', type: 'dir' },
+      { name: 'share/', type: 'dir' },
+    ]},
+    { name: 'test', type: 'dir', comment: '`pixi run -e test`', children: [
+      { name: 'bin', type: 'dir', children: [
+        { name: 'python', type: 'file' },
+        { name: 'pytest', type: 'file' },
+        { name: 'pip', type: 'file' },
+      ]},
+      { name: 'conda-meta', type: 'dir', children: [
+        { name: 'python-3.14.4-h0_0.json', type: 'file' },
+        { name: 'pytest-9.0.3-py_0.json', type: 'file' },
+      ]},
+      { name: 'lib/python3.14/site-packages/', type: 'dir', comment: 'pytest, _pytest, …' },
+      { name: 'include/', type: 'dir' },
+      { name: 'share/', type: 'dir' },
+    ]},
+  ]"
+/>
+
+</div>
+
+<div v-click="8" class="env-layer">
+
+<img src="./assets/pixi-env-reflinks.svg" class="w-full" alt="pixi envs reflinking from the global package cache" />
+
+</div>
+
+</div>
+
+<style scoped>
+.env-stack {
+  position: relative;
+}
+.env-layer {
+  position: absolute;
+  inset: 0;
+}
+</style>
+
+
+<style>
+/* Disable the theme's slide-scoped overflow scroll for this one slide so
+ * the rotated recipe card can extend past the SVG without being clipped. */
+.slidev-layout {
+  overflow: visible !important;
+}
+</style>
+
+
 ---
 layout: center
 <!--class: text-center-->
 ---
 
-# Ready for some more?
+# Some more demo's
 
 ---
 layout: two-cols
 ---
 
-# Global installations (`btop`)
+# Demo: Global installations (`btop`)
 
 <v-clicks at="1">
 
 - One manifest, one isolated env per tool
 - `pixi global install btop`, get its own env
 - Trampoline in `~/.pixi/bin` (on `$PATH`)
-- Let me show you
 
 </v-clicks>
 
@@ -405,7 +507,7 @@ layout: two-cols
 
 <div v-click="1">
 
-```toml
+```toml {lines: true}
 # ~/.pixi/manifests/pixi-global.toml
 # .. other things
 [envs.btop]
@@ -452,14 +554,14 @@ exposed = { btop = "btop" }
 
 ---
 
-# `Pixi` with multiple languages.
+# Demo: `Pixi` as a Polyglot
 
 <v-clicks>
 
-- conda-forge has compilers for loads of languages: C++, Rust, R, Fortran etc.
-- Normally conda-forge packages are binary.
+- conda-forge has: C++, Rust, R, Fortran etc. compilers
+- Normally conda packages are binary.
 - We have `pixi build`: *source directory* into a conda package
-- One **backend** per language
+- **backend** per language
 
 </v-clicks>
 
@@ -475,13 +577,76 @@ Don't read the bullets; let them land. Pivot straight to the demo.
 
 ---
 
-# `Pixi` with Inko
+# `Pixi` with Inko 
+
+
+<v-clicks>
+
+- Try pixi and <img src="/inko-logo.png" class="inline align-middle h-5 mx-1" alt="Inko" />
+- Put inko to conda-forge: https://github.com/conda-forge/inko-feedstock
+- Allows you to manage Inko compiler with Pixi
+
+</v-clicks>
+
+<img v-click="[2, 4]" src="/inko.png" class="absolute right-12 bottom-16 w-128 rounded shadow" alt="Inko screenshot" />
+
+<RecipeCard v-click="4" side="right" class="inko-recipe">
+
+```yaml
+# inko-feedstock recipe.yaml
+context:
+  version: "0.20.0"
+
+package:
+  name: inko
+  version: ${{ version }}
+
+source:
+  url: https://github.com/inko-lang/inko/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 19cef883…
+
+build:
+  number: 0
+  skip: win
+  script:
+    interpreter: nu
+    content: |
+      cargo auditable build --release --locked
+      cp $"target/release/inko" $"($env.PREFIX)/bin/inko"
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ compiler('rust') }}
+    - cargo-auditable
+    - nushell
+  host:
+    - llvmdev 18.1.*
+    - zlib
+    - libxml2-devel
+    - libffi
+```
+
+</RecipeCard>
+
+<style>
+.slidev-layout:has(.inko-recipe) {
+  overflow: visible !important;
+}
+</style>
+
 
 ---
 layout: center
 class: text-center
 ---
 
-# Thanks.
+# Thanks For Listening
+### Feel Free to ask me Anything
 
-[pixi.sh](https://pixi.sh) · [rattler-book](https://prefix-dev.github.io/rattler-book/) · [github.com/prefix-dev](https://github.com/prefix-dev)
+<div class="grid mt-10 grid-cols-2 gap-x-8 gap-y-6 my-6 justify-items-center">
+  <a href="https://github.com/prefix-dev/pixi"><img src="/logos/pixi-banner.png" alt="pixi" class="max-h-30 object-contain drop-shadow-md" /></a>
+  <a href="https://github.com/conda/rattler"><img src="/logos/rattler-banner.webp" alt="rattler" class="max-h-30 object-contain drop-shadow-md" /></a>
+  <a href="https://github.com/prefix-dev/rattler-build"><img src="/logos/rattler-build-banner.webp" alt="rattler-build" class="max-h-30 object-contain drop-shadow-md" /></a>
+  <a href="https://github.com/prefix-dev/resolvo"><img src="/logos/resolvo-banner.webp" alt="resolvo" class="max-h-30 object-contain drop-shadow-md" /></a>
+</div>

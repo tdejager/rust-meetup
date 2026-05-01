@@ -11,6 +11,9 @@ importers:
       '@fontsource/ibm-plex-mono':
         specifier: ^5.2.7
         version: 5.2.7
+      '@rive-app/canvas-lite':
+        specifier: ^2.37.5
+        version: 2.37.5
       '@slidev/cli':
         specifier: ^52.15.0
         version: 52.15.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@nuxt/kit@3.21.2)(@types/markdown-it@14.1.2)(@types/node@22.19.17)(@vue/compiler-sfc@3.5.33)(markdown-it@14.1.1)(postcss@8.5.12)
@@ -423,6 +426,9 @@ packages:
 
   '@quansync/fs@1.0.0':
     resolution: {integrity: sha512-4TJ3DFtlf1L5LDMaM6CanJ/0lckGNtJcMjQ1NAV6zDmA0tEHKZtxNKin8EgPaVX1YzljbxckyT2tJrpQKAtngQ==}
+
+  '@rive-app/canvas-lite@2.37.5':
+    resolution: {integrity: sha512-IyJIm2cL2PlbTqQrgawoR2+k5rA4wP52IxAk7fksXGirKBURLvaUmCtTRqGCx4KfKzpK4z6O8M/LD/j7CQsT4Q==}
 
   '@rolldown/binding-android-arm64@1.0.0-rc.17':
     resolution: {integrity: sha512-s70pVGhw4zqGeFnXWvAzJDlvxhlRollagdCCKRgOsgUOH3N1l0LIxf83AtGzmb5SiVM4Hjl5HyarMRfdfj3DaQ==}
@@ -3164,6 +3170,8 @@ snapshots:
   '@quansync/fs@1.0.0':
     dependencies:
       quansync: 1.0.0
+
+  '@rive-app/canvas-lite@2.37.5': {}
 
   '@rolldown/binding-android-arm64@1.0.0-rc.17':
     optional: true

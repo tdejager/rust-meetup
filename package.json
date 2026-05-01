@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@rive-app/canvas-lite": "^2.37.5",
     "@slidev/cli": "^52.15.0",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
