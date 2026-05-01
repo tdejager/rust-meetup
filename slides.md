@@ -71,10 +71,14 @@ layout: center
 
 # Why do I think its fun?
 
+<v-clicks>
+
 - Working on package managers is a great enabler
 - Both algorithmic and more engineering problems
 - People are generally quite grateful
 - Active discord around ~250 members
+
+</v-clicks>
 
 ---
 
@@ -103,6 +107,23 @@ layout: center
 
 </div>
 
+---
+
+# Philosophy of Pixi
+
+<v-clicks>
+
+- Pixi values:
+  - Fast.
+  - User Friendly.
+  - Isolated Environments.
+  - Single tool.
+  - Fun.
+- First class windows support
+- `pixi run start` should be all you need
+
+</v-clicks>
+
 
 <!--
 Pain-point opener. Concrete: we built robots, the deploy story was a mess.
@@ -116,7 +137,7 @@ layout: two-cols
 
 ### Some repositories on GitHub with a `pixi.toml`
 
-<div class="users-grid" :class="`clicks-${Math.min($clicks, 5)}`">
+<div class="users-grid" :class="`clicks-${Math.min($clicks, 6)}`">
 
 | stars | repository | how they use it |
 |------:|:-----------|:-----------|
@@ -124,6 +145,7 @@ layout: two-cols
 | **32k** | [numpy/numpy](https://github.com/numpy/numpy) | Dev environment for Contributors |
 | **31k** | [FreeCAD/FreeCAD](https://github.com/FreeCAD/FreeCAD) | 5-platform C++/Python build & task runner |
 | **26k** | [modular/modular](https://github.com/modular/modular) | recommended way to install MAX & Mojo |
+| **5.4k** | [ros2/ros2](https://github.com/ros2/ros2) | windows installation, partial linux |
 | **3.2k** | [NVIDIA/cuda-python](https://github.com/NVIDIA/cuda-python) | monorepo runner with CUDA 12 / 13 envs |
 
 </div>
@@ -146,7 +168,8 @@ layout: two-cols
 .users-grid.clicks-2 tbody tr:nth-child(-n+2),
 .users-grid.clicks-3 tbody tr:nth-child(-n+3),
 .users-grid.clicks-4 tbody tr:nth-child(-n+4),
-.users-grid.clicks-5 tbody tr:nth-child(-n+5) {
+.users-grid.clicks-5 tbody tr:nth-child(-n+5),
+.users-grid.clicks-6 tbody tr:nth-child(-n+6) {
   color: var(--tufte-text);
   opacity: 1;
 }
@@ -160,11 +183,12 @@ layout: two-cols
   object-fit: contain;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
 }
-.logo-cloud .l-python  { top: 6%;  left: 18%; width: 32%; transform: rotate(-6deg); }
-.logo-cloud .l-numpy   { top: 12%; right: 6%; width: 38%; transform: rotate(4deg); }
-.logo-cloud .l-freecad { top: 42%; left: 6%;  width: 30%; transform: rotate(8deg); }
-.logo-cloud .l-modular { top: 50%; right: 14%; width: 22%; transform: rotate(-3deg); }
-.logo-cloud .l-nvidia  { bottom: 8%; left: 28%; width: 36%; transform: rotate(2deg); }
+.logo-cloud .l-python  { top: 4%;  left: 18%; width: 28%; transform: rotate(-6deg); }
+.logo-cloud .l-numpy   { top: 10%; right: 4%; width: 34%; transform: rotate(4deg); }
+.logo-cloud .l-freecad { top: 36%; left: 4%;  width: 26%; transform: rotate(8deg); }
+.logo-cloud .l-modular { top: 40%; right: 18%; width: 20%; transform: rotate(-3deg); }
+.logo-cloud .l-nvidia  { bottom: 18%; left: 26%; width: 32%; transform: rotate(2deg); }
+.logo-cloud .l-ros2    { bottom: 4%;  right: 6%; width: 32%; transform: rotate(-4deg); }
 </style>
 
 ::right::
@@ -174,7 +198,8 @@ layout: two-cols
   <img v-click="2" src="/logos/numpy.svg"   class="l-numpy"   alt="NumPy" />
   <img v-click="3" src="/logos/freecad.svg" class="l-freecad" alt="FreeCAD" />
   <img v-click="4" src="/logos/modular.svg" class="l-modular" alt="Modular" />
-  <img v-click="5" src="/logos/nvidia.svg"  class="l-nvidia"  alt="NVIDIA" />
+  <img v-click="5" src="/logos/ros2.svg"    class="l-ros2"    alt="ROS 2" />
+  <img v-click="6" src="/logos/nvidia.svg"  class="l-nvidia"  alt="NVIDIA" />
 </div>
 
 <!--
@@ -635,6 +660,13 @@ requirements:
 }
 </style>
 
+---
+
+# How did we get here?
+
+---
+src: ./pages/converting-to-rust.md
+---
 
 ---
 layout: center

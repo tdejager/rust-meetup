@@ -129,18 +129,25 @@
     padding-inline-start: 1.2em;
     margin-inline-start: -1.2em;
 }
-/* Hollow markers (Butterick: "more subtle than solid bullets") and a
- * smaller, muted marker color for ul. */
+/* Bullets — plain disc, but rendered in our sans face (Gill Sans /
+ * Concourse-style) and sized down + muted so it reads as a quiet
+ * marker that isn't shouting in the same serif as the body text. */
 .slidev-layout ul {
-    list-style: circle outside;
+    list-style-type: disc;
+}
+.slidev-layout ul ul {
+    list-style-type: disc;
+}
+.slidev-layout ul ul ul {
+    list-style-type: "–  ";
 }
 .slidev-layout li {
     display: list-item;
     padding-left: 0;
 }
 .slidev-layout ul > li::marker {
-    color: var(--tufte-muted);
-    font-size: 0.85em;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+    font-size: 0.7em;
 }
 .slidev-layout li:not(:first-child) {
     margin-top: 0.25rem;
@@ -173,7 +180,12 @@
     align-items: center;
     justify-content: center;
     line-height: 1;
-    font-family: var(--tufte-serif);
+    /* Butterick: "list indices may use a different font than the list
+     * item itself" — body is serif, so set the index in our sans face
+     * (Gill Sans) for a quiet contrast. Concourse T3 Index is his
+     * commercial choice; Gill is the closest free analogue we ship. */
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+    letter-spacing: 0.02em;
     font-feature-settings:
         "lnum" 1,
         "tnum" 1;
