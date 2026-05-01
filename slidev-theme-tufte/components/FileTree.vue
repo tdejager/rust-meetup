@@ -20,7 +20,7 @@ defineProps<{ tree: Node[]; rootLabel?: string }>()
       v-for="(node, i) in tree"
       :key="i"
       :node="node"
-      :prefixes="[]"
+      :ancestors-has-more="[]"
       :is-last="i === tree.length - 1"
     />
   </div>
@@ -30,18 +30,58 @@ defineProps<{ tree: Node[]; rootLabel?: string }>()
 .file-tree {
   font-family: var(--tufte-mono, 'IBM Plex Mono', Menlo, monospace);
   font-size: 0.78rem;
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--tufte-text, #111);
-  white-space: pre;
+  --gutter-w: 1.4em;
+  --rule-color: var(--tufte-muted, #888);
 }
 .file-tree :deep(.row) {
   display: flex;
   align-items: center;
+  position: relative;
 }
-.file-tree :deep(.connector) {
-  color: var(--tufte-muted, #888);
-  white-space: pre;
-  flex-shrink: 0;
+/* Gutter columns — one per ancestor depth + the row's own elbow. They
+ * are drawn as flex children of fixed width, with continuous vertical
+ * lines via top/bottom borders that span the full row height. This
+ * way verticals on consecutive rows touch regardless of line-height. */
+.file-tree :deep(.gutter) {
+  flex: 0 0 var(--gutter-w);
+  align-self: stretch;
+  position: relative;
+}
+/* Vertical line passing fully through this gutter. */
+.file-tree :deep(.gutter--vert)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.35em;
+  width: 0;
+  border-left: 1px solid var(--rule-color);
+}
+/* The row's own elbow: vertical line from row top to vertical centre,
+ * plus a horizontal stub reaching the icon. */
+.file-tree :deep(.elbow)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  /* default: ├ — line goes from top through the full row */
+  bottom: 0;
+  left: 0.35em;
+  width: 0;
+  border-left: 1px solid var(--rule-color);
+}
+.file-tree :deep(.elbow--last)::before {
+  /* └ — line stops at the row's vertical centre */
+  bottom: 50%;
+}
+.file-tree :deep(.elbow-h) {
+  position: absolute;
+  top: 50%;
+  left: 0.35em;
+  width: 0.85em;
+  height: 0;
+  border-top: 1px solid var(--rule-color);
 }
 .file-tree :deep(.icon) {
   flex-shrink: 0;
@@ -57,6 +97,6 @@ defineProps<{ tree: Node[]; rootLabel?: string }>()
 .file-tree :deep(.name.link) { color: var(--tufte-accent, #c14a26); }
 .file-tree :deep(.name.file) { color: var(--tufte-text, #111); }
 .file-tree :deep(.target)    { color: var(--tufte-accent, #c14a26); font-style: italic; }
-.file-tree :deep(.comment)   { color: var(--tufte-muted, #888); font-style: italic; }
+.file-tree :deep(.comment)   { color: var(--tufte-muted, #888); font-style: italic; margin-left: 0.6em; }
 .file-tree .root .name       { color: var(--tufte-text, #111); font-weight: 500; }
 </style>

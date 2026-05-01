@@ -9,19 +9,31 @@ type Node = {
 
 const props = defineProps<{
   node: Node
-  prefixes: string[]
+  // For each ancestor level, true means a vertical line passes through
+  // this column (because that ancestor still has more siblings below);
+  // false means the column is empty (ancestor's branch has terminated).
+  ancestorsHasMore: boolean[]
   isLast: boolean
 }>()
 
-// "│   " carries the line down through this column for descendants;
-// "    " (four spaces) means this branch terminated above.
-const childPrefixes = [...props.prefixes, props.isLast ? '    ' : '│   ']
-const elbow = props.isLast ? '└── ' : '├── '
+const childAncestors = [...props.ancestorsHasMore, !props.isLast]
 </script>
 
 <template>
   <div class="row">
-    <span class="connector">{{ prefixes.join('') }}{{ elbow }}</span>
+    <!-- One gutter per ancestor level: draws a vertical line if that
+         level still has more siblings, otherwise an empty spacer. -->
+    <span
+      v-for="(hasMore, i) in ancestorsHasMore"
+      :key="i"
+      class="gutter"
+      :class="{ 'gutter--vert': hasMore }"
+    />
+    <!-- Elbow gutter for this row: vertical-stub + horizontal stub.
+         For non-last rows it's the ├ shape; last rows the └ shape. -->
+    <span class="gutter elbow" :class="{ 'elbow--last': isLast }">
+      <span class="elbow-h" />
+    </span>
     <carbon-folder    v-if="node.type === 'dir'"       class="icon dir" />
     <carbon-link      v-else-if="node.type === 'link'" class="icon link" />
     <carbon-document  v-else                            class="icon file" />
@@ -33,7 +45,7 @@ const elbow = props.isLast ? '└── ' : '├── '
     v-for="(child, i) in node.children || []"
     :key="i"
     :node="child"
-    :prefixes="childPrefixes"
+    :ancestors-has-more="childAncestors"
     :is-last="i === (node.children!.length - 1)"
   />
 </template>

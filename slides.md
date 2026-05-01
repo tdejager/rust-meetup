@@ -689,7 +689,7 @@ Don't read the bullets; let them land. Pivot straight to the demo.
 
 ---
 
-# `Pixi` with Inko 
+# Demo: `Pixi` with Inko 
 
 
 <v-clicks>
@@ -751,7 +751,7 @@ requirements:
 
 # How did we get here?
 
-<div v-click="1" class="absolute right-12 top-24 w-100 grid grid-cols-2 gap-3">
+<div v-click="[1, 5]" class="absolute right-12 top-24 w-100 grid grid-cols-2 gap-3">
   <img src="/smart-robotics.jpg" class="w-full h-44 object-cover rounded shadow" alt="Smart Robotics palletising robot" />
   <img src="/smart-robotics-pick-place.jpg" class="w-full h-44 object-cover rounded shadow" alt="Smart Robotics pick-and-place robot" />
 </div>
@@ -765,19 +765,42 @@ requirements:
 
 </v-clicks>
 
+<PainPoint v-click="5" class="pain-1">
+  We could not debug older machines when switching to a new Ubuntu.
+</PainPoint>
+<PainPoint v-click="6" class="pain-2">
+  I could not work together with other developers using a different Ubuntu.
+</PainPoint>
 
-<div v-click="5" class="mt-12">
+<img v-click="5" src="/logos/paxton-frying-pan.svg" class="absolute paxton-frying-pan" alt="Paxton with a frying pan" />
 
-## We could not debug older 
-## machines when switching to a new Ubuntu
-
-</div>
-<div v-click="6" class="mt-12">
-
-## I could not work together 
-## with other developers using a different ubuntu
-
-</div>
+<style scoped>
+/* Playful arrangement: each pain note pinned at a slight tilt, like
+ * post-its dropped onto the slide; Paxton angled in the bottom-right
+ * holding the pan up toward them. */
+.pain-1 {
+  position: absolute;
+  right: 4rem;
+  top: 5.5rem;
+  transform: rotate(-3deg);
+  z-index: 2;
+}
+.pain-2 {
+  position: absolute;
+  right: 0.5rem;
+  top: 17rem;
+  transform: rotate(2.5deg);
+  z-index: 2;
+}
+.paxton-frying-pan {
+  width: 16rem;
+  bottom: 0.5rem;
+  right: 18rem;
+  transform: scaleX(-1) rotate(-7deg);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  z-index: 1;
+}
+</style>
 
 ---
 
@@ -786,8 +809,8 @@ requirements:
 <v-clicks>
 
 - Conda packages are nice,
-
-- Robostack is distroless ROS
+- Superior to Docker for local development,
+- Robostack is distroless ROS (finally!),
 - Conda was slow but Mamba was Fast!
 
 </v-clicks>
@@ -795,8 +818,8 @@ requirements:
 
 ---
 
-# Conda workflow is strange
-### at least for `cargo`, `npm`, etc. users
+# Conda Workflow is Strange
+**at least for `cargo`, `npm`, etc. users**
 
 <div class="grid grid-cols-2 gap-8 mt-4">
 
@@ -804,7 +827,7 @@ requirements:
 
 <v-clicks at="1">
 
-- Has the concept of "base" and "global" environments
+- Has the concept of `base` and `global` environments
 - "base" is always activated :(
 
 </v-clicks>
@@ -812,8 +835,8 @@ requirements:
 <v-clicks at="3">
 
 - `conda activate my-env`
-- `conda install foo` => into an env
-- No lock file != No Reproducibility per Project
+- `conda install foo` &#8594; into an env
+- No lock file &ne; No Reproducibility per Project
 
 </v-clicks>
 
@@ -837,10 +860,10 @@ requirements:
 <div v-click="6" class="conda-shell mt-6">
 <pre><span class="prompt">(base) $</span> cd ml-project
 <span class="prompt">(base) $</span> <span class="cmd">conda activate ml-project</span>
-<span class="prompt">(ml-project) $</span> <span class="cmd">conda install pandas</span>
-<span class="prompt">(ml-project) $</span> python script.py
-<span class="prompt">(ml-project) $</span> deactivate
-<span class="prompt">(base) $</span> python script.py    <span class="oops"># oops — wrong env!</span></pre>
+<span class="prompt">(ml-project) $</span> <span class="cmd">conda install r</span>
+<span class="prompt">(ml-project) $</span> r calc.r
+<span class="prompt">(ml-project) $</span> <span class="cmd">deactivate </span>
+<span class="prompt">(base) $</span> r hi.r    <span class="oops"># oops no R installed!</span></pre>
 </div>
 
 </div>
@@ -863,9 +886,68 @@ requirements:
 </style>
 
 ---
+
+# Wished for Something Better
+
+<v-clicks>
+
+- We loved `cargo` and Rust,
+- Wolf asked us to join prefix (was being funded),
+- Wolf wanted to use C++ for the next thing, 
+- but we were 3 people, 
+- and two of us voted for Rust! 
+
+</v-clicks>
+
+---
+
+# What did we Need
+
+<v-clicks>
+
+- Isolated Environments.
+- Ease of Use.
+- Fast.
+- Tries to Always keep Environment up-to-date.
+
+</v-clicks>
+
+---
 # This is converting the ecosystem to rust
 src: ./pages/converting-to-rust.md
 ---
+
+---
+layout: center
+class: text-center
+---
+
+# What were Things we did Right
+
+<v-clicks>
+
+- Directly made `Rattler` into a library,
+- Started dogfooding `Rattler` with our website,
+- We invested into making our own solver,
+- We had a project `rip` which we ditched for `uv`
+
+</v-clicks>
+
+---
+
+# What were Things we could've done Better,
+
+<v-clicks>
+
+- We did not split pixi into crates directly,
+- We did not invest *enough* into faster CI,
+  - Offline tests
+  - Mock registries
+- We started on the build feature late in the process,
+- We still find it really hard to juggle features v.s. issues
+
+</v-clicks>
+
 
 ---
 layout: center
