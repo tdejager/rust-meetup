@@ -5,8 +5,8 @@ dist
 .vite-inspect
 .remote-assets
 components.d.ts
-.playwright-cli/**
-.playwright/**
+**/.playwright-cli/**
+**/.playwright/**
 # pixi environments
 .pixi/*
 !.pixi/config.toml

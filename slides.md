@@ -22,7 +22,7 @@ highlighter: shiki
 
 # Introducing Pixi
 
-## Package Management, conda, and Rust 
+## A Journey of Making a Package Manager in Rust
 
 <div class="mt-28">
 Tim de Jager at <img src="/prefix-logo.svg" class="inline align-middle h-5 mx-1" alt="prefix.dev" />
@@ -44,7 +44,7 @@ Tim de Jager at <img src="/prefix-logo.svg" class="inline align-middle h-5 mx-1"
 
 <v-clicks depth="2">
 
-- Tim de Jager [github](https://github.com/tdejager)
+- Tim de Jager, see: [github](https://github.com/tdejager)
 - Developer at <img src="/prefix-logo.svg" class="inline align-middle h-5 mx-1" alt="prefix.dev" />
 - Used to work at:
   - Abbey Games (making games) with C++
@@ -601,6 +601,57 @@ layout: center
 # Some more demo's
 
 ---
+
+# Demo: "Works on my Machine"
+
+<div class="womm-cap mt-2">one HTTPS request:</div>
+
+```rust {lines:true}
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let zen = reqwest::blocking::get("https://api.github.com/zen")?
+        .error_for_status()?
+        .text()?;
+    println!("GitHub zen: {}", zen.trim());
+    Ok(())
+}
+```
+
+<div v-click="1" class="womm-cap mt-3">build it the obvious way:</div>
+
+<div v-click="1">
+
+```sh
+$ cargo build
+```
+
+</div>
+
+<div v-click="2" class="womm-punchline mt-3">
+…this should just work, right?
+</div>
+
+<style scoped>
+.womm-cap {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tufte-muted, #888);
+}
+.womm-punchline {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--tufte-accent, #c14a26);
+}
+</style>
+
+<!--
+Don't read the slide. Run cargo build in a fresh rust:1.93-slim, watch
+openssl-sys explode, then `pixi run build` and watch it pass. The
+punchline is delivered by the terminal, not the markdown.
+-->
+
+---
 layout: two-cols
 ---
 
@@ -747,6 +798,7 @@ requirements:
 }
 </style>
 
+
 ---
 
 # How did we get here?
@@ -765,10 +817,10 @@ requirements:
 
 </v-clicks>
 
-<PainPoint v-click="5" class="pain-1">
+<PainPoint v-click="6" class="pain-1">
   We could not debug older machines when switching to a new Ubuntu.
 </PainPoint>
-<PainPoint v-click="6" class="pain-2">
+<PainPoint v-click="7" class="pain-2">
   I could not work together with other developers using a different Ubuntu.
 </PainPoint>
 
@@ -794,9 +846,9 @@ requirements:
 }
 .paxton-frying-pan {
   width: 16rem;
-  bottom: 0.5rem;
-  right: 18rem;
-  transform: scaleX(-1) rotate(-7deg);
+  bottom: 1rem;
+  right: 15rem;
+  transform: scale(120%) scaleX(-1) rotate(-7deg);
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
   z-index: 1;
 }
@@ -806,15 +858,125 @@ requirements:
 
 # Found Conda & Mamba
 
+<div class="grid grid-cols-12 gap-6 mt-2">
+
+<div class="col-span-7">
+
 <v-clicks>
 
 - Conda packages are nice,
 - Superior to Docker for local development,
 - Robostack is distroless ROS (finally!),
-- Conda was slow but Mamba was Fast!
+- Micromamba, is a Conda rewrite. Written by [Wolf](https://github.com/wolfv)
 
 </v-clicks>
 
+</div>
+
+<div class="col-span-5 logo-col relative">
+
+<div v-click="1" class="logo-pair conda-pair">
+  <img src="/logos/conda-mark.png" alt="conda" class="logo-main conda-mark" />
+  <img src="/logos/python.svg" alt="python" class="sticker python-sticker" />
+</div>
+
+<div v-click="3" class="logo-pair robostack-row">
+  <img src="/logos/robostack.png" alt="robostack" class="logo-main robostack-mark" />
+</div>
+
+<div v-click="4" class="race">
+  <div class="racer racer-conda">
+    <img src="/logos/conda-mark.png" alt="conda" class="logo-mini" />
+    <span class="speed-label slow">slow…</span>
+  </div>
+  <div class="racer racer-mamba">
+    <img src="/logos/mamba.png" alt="micromamba" class="logo-mamba" />
+    <img src="/logos/cpp.svg" alt="C++" class="sticker cpp-sticker" />
+    <span class="speed-label fast">fast!</span>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+<style scoped>
+.logo-col { min-height: 22rem; }
+.logo-pair { position: absolute; display: inline-flex; align-items: center; }
+.logo-main { width: 7rem; height: auto; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.18)); }
+.sticker {
+  position: absolute;
+  width: 2.4rem;
+  height: 2.4rem;
+  background: #fffff8;
+  border-radius: 50%;
+  padding: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+}
+
+.conda-pair { top: 0.2rem; right: 6.5rem; transform: rotate(-4deg); }
+.conda-pair .python-sticker { right: -1rem; bottom: -0.6rem; transform: rotate(8deg); }
+
+.robostack-row { top: 7.5rem; right: 1.5rem; transform: rotate(5deg); }
+.robostack-row .robostack-mark { width: 6rem; border-radius: 12px; }
+
+.race {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 0.5rem;
+}
+.racer { position: relative; display: flex; flex-direction: column; align-items: center; }
+.logo-mini { width: 4.5rem; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18)); }
+.logo-mamba { width: 9rem; height: auto; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2)); }
+
+.racer-mamba .cpp-sticker { position: absolute; right: -0.2rem; top: -0.6rem; transform: rotate(10deg); }
+
+.speed-label {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+.speed-label.slow { color: var(--tufte-muted, #888); }
+.speed-label.fast { color: var(--tufte-accent, #c14a26); font-weight: 700; }
+
+.racer-conda .logo-mini {
+  animation: conda-crawl 3.2s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18)) grayscale(0.2);
+  opacity: 0.85;
+}
+@keyframes conda-crawl {
+  0%, 100% { transform: translateX(0) rotate(-2deg); }
+  50%      { transform: translateX(0.6rem) rotate(2deg); }
+}
+
+.racer-mamba { animation: mamba-zoom 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.4) both; }
+@keyframes mamba-zoom {
+  0%   { transform: translateX(-3rem) scale(0.6); opacity: 0; }
+  60%  { transform: translateX(0.4rem) scale(1.08); opacity: 1; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+.racer-mamba::before {
+  content: '';
+  position: absolute;
+  left: -2.4rem;
+  top: 45%;
+  width: 2.2rem;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--tufte-accent, #c14a26));
+  border-radius: 2px;
+  opacity: 0.7;
+  box-shadow:
+    0 -0.45rem 0 -0.5px var(--tufte-accent, #c14a26),
+    0  0.45rem 0 -0.5px var(--tufte-accent, #c14a26);
+}
+</style>
 
 ---
 
@@ -889,19 +1051,35 @@ requirements:
 
 # Wished for Something Better
 
+<div class="grid grid-cols-[1fr_auto] gap-8 items-center">
+<div>
+
 <v-clicks>
 
-- We loved `cargo` and Rust,
+- We ❤️ `cargo` and Rust,
 - Wolf asked us to join prefix (was being funded),
 - Wolf wanted to use C++ for the next thing, 
 - but we were 3 people, 
-- and two of us voted for Rust! 
+- and two of us voted for Rust!
+- **So let's rewrite it in Rust**
 
 </v-clicks>
 
+</div>
+<div v-click="5" class="text-center relative w-64 mx-auto">
+  <img src="https://rustacean.net/assets/rustacean-flat-happy.svg" class="w-64" alt="Ferris" />
+  <div class="absolute text-6xl" style="top: 30%; left: 8%; transform: rotate(-20deg);">🏆</div>
+</div>
+</div>
+
 ---
 
-# What did we Need
+# What did we Need, 
+### &nbsp;&nbsp;&nbsp;&nbsp; and what did we end up with
+
+<div class="grid grid-cols-2 gap-8 mt-4">
+
+<div>
 
 <v-clicks>
 
@@ -912,10 +1090,535 @@ requirements:
 
 </v-clicks>
 
+</div>
+
+<div class="needs-panels relative">
+
+<div v-click="[1, 2]" class="panel">
+<div class="caption">an isolated env, scoped to the project</div>
+<FileTree
+  rootLabel="my-project/"
+  :tree="[
+    { name: 'pixi.toml', type: 'file' },
+    { name: 'pixi.lock', type: 'file' },
+    { name: 'src', type: 'dir' },
+    { name: '.pixi', type: 'dir', comment: 'lives next to your code', children: [
+      { name: 'envs', type: 'dir', children: [
+        { name: 'default', type: 'dir', children: [
+          { name: 'bin', type: 'dir' },
+          { name: 'lib', type: 'dir' },
+          { name: 'conda-meta', type: 'dir' },
+        ]},
+        { name: 'test', type: 'dir', comment: 'feature-based, on demand' },
+      ]},
+    ]},
+  ]"
+/>
+</div>
+
+<div v-click="[2, 3]" class="panel">
+<div class="caption">just a few commands cover the common cases</div>
+
+```bash
+$ pixi init my-project        # new workspace
+$ pixi add python pytest      # add deps
+$ pixi add --pypi httpx       # pypi works too
+$ pixi run test               # run a task
+$ pixi shell                  # activate env
+$ pixi update                 # bump the lock
+```
+
+</div>
+
+<div v-click="[3, 4]" class="panel">
+<div class="caption later">i'll show this later…</div>
+</div>
+
+<div v-click="4" class="panel">
+
+```toml {all|1-3|5-8|7|all}
+[dependencies]
+pnpm    = "*"
+nodejs  = "*"
+
+[tasks]
+install = { cmd = "pnpm install --frozen-lockfile" }
+dev     = { cmd = "pnpm exec slidev --open",
+            # This forces an install first
+            depends-on = ["install"] }
+```
+
+</div>
+
+</div>
+
+</div>
+
+<style scoped>
+.needs-panels { min-height: 22rem; }
+.panel { position: absolute; inset: 0; }
+.panel .caption {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tufte-muted, #888);
+  margin-bottom: 0.6rem;
+}
+.panel .caption code {
+  font-family: var(--tufte-mono);
+  font-style: normal;
+  font-size: 0.85em;
+  background: rgba(193, 74, 38, 0.06);
+  padding: 0 0.2em;
+  border-radius: 2px;
+}
+.panel .caption.later {
+  font-size: 1rem;
+  color: var(--tufte-accent, #c14a26);
+}
+</style>
+
+---
+
+# Aside: Universal Package Manager Concepts
+
+
+<div class="universals" :class="`step-${$clicks}`">
+
+<v-clicks>
+
+- **Versions**
+  - npm, cargo: `1.2.3` (SemVer)
+  - pip: PEP 440, e.g. `1.2.3rc1`
+  - conda: own ordering, e.g. `1.2.3=py312_0`
+- **Requirements**
+  - npm: `^1.2.0`
+  - pip: PEP 508, e.g. `requests>=2,<3`
+  - cargo: `serde = "^1.0"`
+  - conda: MatchSpec, e.g. `lua >=5.4`
+- **Artifacts**
+  - npm: `.tgz`
+  - pip: `.whl` (or sdist)
+  - cargo: `.crate`
+  - conda: `.conda`, `.tar.bz2`
+- **An index**
+  - npm: `registry.npmjs.org`
+  - pip: `pypi.org/simple/`
+  - cargo: `index.crates.io`
+  - conda: a channel, `repodata.json`
+
+</v-clicks>
+
+</div>
+
+<div class="pkg-flow mt-3">
+
+<svg viewBox="0 0 720 200" class="w-full" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+    <marker id="pkg-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+      markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c14a26" />
+    </marker>
+  </defs>
+
+  <g v-click="6">
+    <rect x="20"  y="36" width="200" height="80" rx="4" class="step-box" />
+    <text x="120" y="82"  class="step-name">Discovery</text>
+    <text x="120" y="102" class="step-role">"what exists?"</text>
+  </g>
+
+  <g v-click="7">
+    <line x1="222" y1="76" x2="258" y2="76" class="flow-arrow" marker-end="url(#pkg-arrow)" />
+    <rect x="260" y="36" width="200" height="80" rx="4" class="step-box" />
+    <text x="360" y="82"  class="step-name">Solving</text>
+    <text x="360" y="102" class="step-role">"which versions fit together?"</text>
+  </g>
+
+  <g v-click="8">
+    <line x1="462" y1="76" x2="498" y2="76" class="flow-arrow" marker-end="url(#pkg-arrow)" />
+    <rect x="500" y="36" width="200" height="80" rx="4" class="step-box" />
+    <text x="600" y="82"  class="step-name">Installation</text>
+    <text x="600" y="102" class="step-role">"get them onto disk"</text>
+  </g>
+
+</svg>
+
+</div>
+
+<style scoped>
+.universals-caption {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tufte-muted, #888);
+  margin-bottom: 0.4rem;
+}
+.universals :deep(> ul) {
+  column-count: 2;
+  column-gap: 2.5rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  margin-top: 0.2rem;
+}
+.universals :deep(> ul > li) {
+  break-inside: avoid;
+  margin-bottom: 0.35rem;
+}
+.universals :deep(ul ul) {
+  font-size: 0.95em;
+  line-height: 1.25;
+  margin-top: 0.05rem;
+  margin-bottom: 0.1rem;
+}
+.universals :deep(ul li) { margin-bottom: 0.05rem; }
+.universals :deep(ul li > strong) { font-weight: 700; }
+.universals :deep(code) {
+  font-family: var(--tufte-mono, "IBM Plex Mono", Consolas, monospace);
+  font-size: 0.92em;
+  background: rgba(193, 74, 38, 0.06);
+  padding: 0 0.18em;
+  border-radius: 2px;
+}
+
+.universals :deep(> ul > li) {
+  transition: opacity 250ms ease, color 250ms ease;
+}
+.universals.step-2 :deep(> ul > li:nth-child(1)),
+.universals.step-3 :deep(> ul > li:nth-child(-n+2)),
+.universals.step-4 :deep(> ul > li:nth-child(-n+3)),
+.universals.step-5 :deep(> ul > li:nth-child(-n+4)),
+.universals.step-6 :deep(> ul > li:nth-child(-n+4)),
+.universals.step-7 :deep(> ul > li:nth-child(-n+4)),
+.universals.step-8 :deep(> ul > li:nth-child(-n+4)) {
+  opacity: 0.35;
+}
+.universals.step-2 :deep(> ul > li:nth-child(1)) :deep(code),
+.universals.step-3 :deep(> ul > li:nth-child(-n+2)) :deep(code),
+.universals.step-4 :deep(> ul > li:nth-child(-n+3)) :deep(code),
+.universals.step-5 :deep(> ul > li:nth-child(-n+4)) :deep(code),
+.universals.step-6 :deep(> ul > li:nth-child(-n+4)) :deep(code),
+.universals.step-7 :deep(> ul > li:nth-child(-n+4)) :deep(code),
+.universals.step-8 :deep(> ul > li:nth-child(-n+4)) :deep(code) {
+  background: transparent;
+}
+.universals-foot {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tufte-accent, #c14a26);
+  margin-top: 0.8rem;
+}
+.pkg-flow { display: flex; justify-content: center; }
+.pkg-flow svg { font-family: var(--tufte-serif); max-width: 100%; max-height: 8.5rem; }
+.pkg-flow .step-box {
+  fill: #fffff8;
+  stroke: #333;
+  stroke-width: 1.4;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.14));
+}
+.pkg-flow .step-num   { font: italic 14px "et-book", serif; fill: var(--tufte-accent, #c14a26); text-anchor: middle; }
+.pkg-flow .step-name  { font: 22px "et-book", serif; fill: #111; font-weight: bold; text-anchor: middle; }
+.pkg-flow .step-role  { font: italic 13px "et-book", serif; fill: #555; text-anchor: middle; }
+.pkg-flow .crate      { font: 13px "IBM Plex Mono", Consolas, monospace; fill: var(--tufte-accent, #c14a26); text-anchor: middle; }
+.pkg-flow .crate-sub  { font: italic 11.5px "et-book", serif; fill: #777; text-anchor: middle; }
+.pkg-flow .flow-arrow { stroke: #c14a26; stroke-width: 1.6; fill: none; }
+.pkg-flow .flow-title { font: italic 13px "et-book", serif; fill: #555; text-anchor: middle; }
+.pkg-flow .flow-foot  { font: italic 13px "et-book", serif; fill: var(--tufte-accent, #c14a26); text-anchor: middle; }
+.pkg-flow g.slidev-vclick-target { transition: opacity 350ms ease-out; }
+.pkg-flow g.slidev-vclick-hidden { opacity: 0; }
+</style>
+
 ---
 # This is converting the ecosystem to rust
 src: ./pages/converting-to-rust.md
 ---
+
+---
+
+# Resolvo, our SAT Solver
+
+<div class="grid grid-cols-12 gap-6 mt-2 items-start">
+
+<div class="col-span-7">
+
+<v-clicks>
+
+- A CDCL SAT solver, started as a port of `libsolv`.
+- Made *generic*, so it knows nothing about conda, PyPI, RPM, etc.
+- Already powering: `pixi` & `rattler` (conda), `resolvo-rpm` *experimental* (Fedora).
+- Async, multithreaded, lazy: only fetches metadata it actually needs.
+- Outputs *human-readable* error messages, not just "unsatisfiable".
+
+</v-clicks>
+
+</div>
+
+<div class="col-span-5 flex justify-center">
+  <img src="/logos/paxton-juggler.png" alt="resolvo" class="w-28 drop-shadow-md" />
+</div>
+
+</div>
+
+<div class="grid grid-cols-12 gap-6 mt-2">
+
+<div v-click="6" class="col-span-7 trait-snippet">
+
+<div class="snippet-cap">the whole interface, in one trait</div>
+
+```rust {all|2-5|7-9|11-13|all}
+trait DependencyProvider: Interner {
+  async fn get_candidates(&self, name: NameId)
+    -> Option<Candidates>;
+
+  async fn get_dependencies(&self, s: SolvableId)
+    -> Dependencies;
+
+  async fn filter_candidates(&self,
+    cs: &[SolvableId], vs: VersionSetId,
+    inverse: bool) -> Vec<SolvableId>;
+
+  async fn sort_candidates(&self, ...);
+}
+```
+
+</div>
+
+<div v-click="7" class="col-span-5 conda-glue self-end">
+
+<div class="snippet-cap">conda support is just an <code>impl</code> of that trait, in <code>rattler_solve</code>:</div>
+
+```rust
+impl DependencyProvider
+  for CondaDependencyProvider<'_>
+{ ... }
+
+impl Interner
+  for CondaDependencyProvider<'_>
+{ ... }
+```
+
+</div>
+
+</div>
+
+<style scoped>
+.trait-snippet :deep(pre), .conda-glue :deep(pre) {
+  font-size: 0.72rem !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+.snippet-cap {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--tufte-muted, #888);
+  margin-bottom: 0.25rem;
+}
+.snippet-cap code {
+  font-family: var(--tufte-mono);
+  font-style: normal;
+  font-size: 0.9em;
+  background: rgba(193, 74, 38, 0.06);
+  padding: 0 0.18em;
+  border-radius: 2px;
+}
+</style>
+
+---
+
+# Rattler, Conda Primitives
+
+<div class="grid grid-cols-12 gap-6 mt-2">
+
+<div class="col-span-9">
+
+<v-clicks>
+
+- A *library*-first reimplementation of conda's primitives in Rust.
+- Used by `pixi`, `prefix.dev`, `py-rattler` (Python bindings), `mise`, parts of `mamba`, and now `conda` itself (`conda --solver rattler`).
+- Async I/O, Multithreaded
+
+</v-clicks>
+
+</div>
+
+<div class="col-span-3 flex justify-center">
+  <img src="/logos/paxton-rattler.png" alt="rattler" class="w-32 drop-shadow-md" />
+</div>
+
+</div>
+
+<div v-click="4" class="rattler-map mt-2">
+
+<svg viewBox="0 0 760 230" class="w-full" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="rt-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+      markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c14a26" />
+    </marker>
+  </defs>
+
+  <!-- Foundation: conda_types, full width across the top -->
+  <rect x="200" y="10" width="360" height="46" rx="4" class="rt-box rt-box--base" />
+  <text x="380" y="32" class="rt-name">rattler_conda_types</text>
+  <text x="380" y="48" class="rt-role">Version, MatchSpec, RepoData, NoArchType, …</text>
+
+  <!-- Three middle crates -->
+  <rect x="20"  y="100" width="220" height="54" rx="4" class="rt-box" />
+  <text x="130" y="124" class="rt-name">rattler_repodata_gateway</text>
+  <text x="130" y="142" class="rt-role">fetch &amp; parse the index</text>
+
+  <rect x="270" y="100" width="220" height="54" rx="4" class="rt-box" />
+  <text x="380" y="124" class="rt-name">rattler_solve</text>
+  <text x="380" y="142" class="rt-role">resolvo glue for conda</text>
+
+  <rect x="520" y="100" width="220" height="54" rx="4" class="rt-box" />
+  <text x="630" y="124" class="rt-name">rattler_package_streaming</text>
+  <text x="630" y="142" class="rt-role">read / write .conda archives</text>
+
+  <!-- Top-level: rattler -->
+  <rect x="270" y="184" width="220" height="40" rx="4" class="rt-box rt-box--top" />
+  <text x="380" y="210" class="rt-name">rattler</text>
+
+  <!-- Dotted lines from base down to the three middle crates -->
+  <line x1="380" y1="56" x2="130" y2="100" class="rt-link rt-link--dotted" />
+  <line x1="380" y1="56" x2="380" y2="100" class="rt-link rt-link--dotted" />
+  <line x1="380" y1="56" x2="630" y2="100" class="rt-link rt-link--dotted" />
+
+  <!-- Solid arrows from middle crates into rattler -->
+  <line x1="130" y1="154" x2="320" y2="184" class="rt-link" marker-end="url(#rt-arrow)" />
+  <line x1="380" y1="154" x2="380" y2="184" class="rt-link" marker-end="url(#rt-arrow)" />
+  <line x1="630" y1="154" x2="440" y2="184" class="rt-link" marker-end="url(#rt-arrow)" />
+
+  <text x="380" y="76" class="rt-caption">shared types</text>
+</svg>
+
+</div>
+
+<div v-click="5" class="rattler-foot mt-2">
+…and a dozen more (cache, networking, shell, lock, index, menuinst, …): pick what you need.
+</div>
+
+<style scoped>
+.rattler-map svg { font-family: var(--tufte-serif); max-width: 100%; max-height: 11rem; }
+.rattler-map .rt-box {
+  fill: #fffff8;
+  stroke: #333;
+  stroke-width: 1.4;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.14));
+}
+.rattler-map .rt-box--base { stroke: #888; }
+.rattler-map .rt-box--top  { stroke: #c14a26; }
+.rattler-map .rt-name {
+  font: 13px "IBM Plex Mono", Consolas, monospace;
+  fill: var(--tufte-accent, #c14a26);
+  text-anchor: middle;
+}
+.rattler-map .rt-role {
+  font: italic 11px "et-book", serif;
+  fill: #555;
+  text-anchor: middle;
+}
+.rattler-map .rt-caption {
+  font: italic 10.5px "et-book", serif;
+  fill: #888;
+  text-anchor: middle;
+}
+.rattler-map .rt-link {
+  stroke: #c14a26;
+  stroke-width: 1.4;
+  fill: none;
+}
+.rattler-map .rt-link--dotted {
+  stroke: #888;
+  stroke-width: 1;
+  stroke-dasharray: 3 2;
+}
+.rattler-foot {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tufte-accent, #c14a26);
+  text-align: center;
+}
+.snippet-cap {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--tufte-muted, #888);
+  margin-bottom: 0.25rem;
+}
+</style>
+
+---
+
+# Rattler-Build, the Package Builder
+
+<div class="grid grid-cols-12 gap-6 mt-2">
+
+<div class="col-span-9">
+
+<v-clicks>
+
+- A from-scratch replacement for `conda-build`, written in Rust.
+- Standalone binary, *no Python in the build pipeline*.
+- New, stricter `recipe.yaml` schema (CEP-13/14), Jinja-templated.
+- Cross-platform: Linux, macOS, Windows; reproducible-ish.
+- Already used to build many `conda-forge` packages.
+
+</v-clicks>
+
+</div>
+
+<div class="col-span-3 flex justify-center">
+  <img src="/logos/paxton-builder.png" alt="rattler-build" class="w-32 drop-shadow-md" />
+</div>
+
+</div>
+
+<div v-click="6" class="rb-flow mt-2">
+
+<svg viewBox="0 0 760 110" class="w-full" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="rb-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+      markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c14a26" />
+    </marker>
+  </defs>
+
+  <rect x="10"  y="20" width="150" height="60" rx="4" class="rb-box" />
+  <text x="85"  y="48" class="rb-name">recipe.yaml</text>
+  <text x="85"  y="66" class="rb-role">+ Jinja vars</text>
+  <line x1="162" y1="50" x2="198" y2="50" class="rb-arrow" marker-end="url(#rb-arrow)" />
+
+  <rect x="200" y="20" width="170" height="60" rx="4" class="rb-box" />
+  <text x="285" y="44" class="rb-name">build env</text>
+  <text x="285" y="62" class="rb-role">solve, fetch, link</text>
+  <text x="285" y="76" class="rb-role">(uses rattler)</text>
+  <line x1="372" y1="50" x2="408" y2="50" class="rb-arrow" marker-end="url(#rb-arrow)" />
+
+  <rect x="410" y="20" width="170" height="60" rx="4" class="rb-box" />
+  <text x="495" y="44" class="rb-name">run script</text>
+  <text x="495" y="62" class="rb-role">capture file list</text>
+  <text x="495" y="76" class="rb-role">+ patch prefixes</text>
+  <line x1="582" y1="50" x2="618" y2="50" class="rb-arrow" marker-end="url(#rb-arrow)" />
+
+  <rect x="620" y="20" width="130" height="60" rx="4" class="rb-box rb-box--out" />
+  <text x="685" y="48" class="rb-name">.conda</text>
+  <text x="685" y="66" class="rb-role">archive</text>
+</svg>
+
+</div>
+
+<style scoped>
+.rb-flow svg { font-family: var(--tufte-serif); max-width: 100%; max-height: 7rem; }
+.rb-box      { fill: #fffff8; stroke: #333; stroke-width: 1.4; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.14)); }
+.rb-box--out { stroke: #c14a26; }
+.rb-name     { font: 16px "et-book", serif; font-weight: bold; fill: #111; text-anchor: middle; }
+.rb-role     { font: italic 11px "et-book", serif; fill: #555; text-anchor: middle; }
+.rb-arrow    { stroke: #c14a26; stroke-width: 1.6; fill: none; }
+</style>
 
 ---
 layout: center
@@ -924,29 +1627,106 @@ class: text-center
 
 # What were Things we did Right
 
+<div class="text-left">
 <v-clicks>
 
 - Directly made `Rattler` into a library,
-- Started dogfooding `Rattler` with our website,
+- Started dogfooding `Rattler` with `Prefix.dev`,
 - We invested into making our own solver,
 - We had a project `rip` which we ditched for `uv`
 
 </v-clicks>
+</div>
+
+<div v-click="5" class="absolute right-24 bottom-24 w-48 h-48 rounded-full overflow-hidden border-2 border-[var(--tufte-rule)] shadow-lg flex items-center justify-center bg-white">
+  <img src="/tombstone.png" class="w-full h-full object-cover" alt="rip tombstone" />
+</div>
 
 ---
 
 # What were Things we could've done Better,
+
+<div class="grid grid-cols-12 gap-6 mt-2">
+
+<div class="col-span-6">
 
 <v-clicks>
 
 - We did not split pixi into crates directly,
 - We did not invest *enough* into faster CI,
   - Offline tests
-  - Mock registries
-- We started on the build feature late in the process,
+  - Mock Registries (conda and PyPI)
+- We started on the *build feature* late in the process,
 - We still find it really hard to juggle features v.s. issues
 
 </v-clicks>
+
+</div>
+
+<div class="col-span-6 mock-panels relative">
+
+<div v-click="4" class="mock-panel">
+
+```rust
+use pixi_test_utils::{MockRepoData, Package};
+
+let mut db = MockRepoData::default();
+// Add test packages
+db.add_package(Package::build("b", "1").finish());
+db.add_package(
+    Package::build("a", "1")
+        .with_dependency("b >=1")
+        .finish(),
+);
+
+// Write to a file
+let channel = db.into_channel().await?;
+```
+
+</div>
+
+<div v-click="4" class="mock-panel mock-panel--pypi">
+<hr />
+
+```rust
+use crate::common::pypi_index::{Database, PyPIPackage};
+
+let index = Database::new()
+    .with(PyPIPackage::new("httpx", "0.27.0"))
+    // Ooh, that's rich!
+    .with(
+        PyPIPackage::new("rich", "13.0.0")
+            .with_requires_dist(["pygments >=2.13"]),
+    )
+    // This writes index into a file
+    .into_simple_index()?;
+```
+
+</div>
+
+</div>
+
+</div>
+
+<style scoped>
+.mock-panels { min-height: 22rem; }
+.mock-panel {
+  margin-bottom: 0.6rem;
+  transition: opacity 250ms ease;
+}
+.mock-caption {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--tufte-muted, #888);
+  margin-bottom: 0.25rem;
+}
+.mock-panel :deep(pre) {
+  font-size: 0.7rem !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+}
+</style>
 
 
 ---
