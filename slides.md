@@ -320,6 +320,148 @@ Frame conda as a generic native-package system. The talk's earlier
 
 ---
 
+# What's actually inside the package?
+
+<div class="pkg-shape-cap">the <em>same</em> library, two ecosystems &mdash; <code>numpy 2.0.0</code></div>
+
+<div class="pkg-shape mt-2 relative">
+
+<svg viewBox="0 0 880 360" class="w-full" preserveAspectRatio="xMidYMid meet">
+<defs>
+<marker id="ps-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#c14a26" />
+</marker>
+</defs>
+
+<g v-click="1">
+<text x="200" y="22" class="ps-label">on PyPI</text>
+<text x="200" y="40" class="ps-mono">numpy-2.0.0-cp312-…-linux_x86_64.whl</text>
+<rect x="40" y="56" width="320" height="220" rx="6" class="ps-box ps-box--wheel" />
+<text x="200" y="80" class="ps-section">the wheel (a zip)</text>
+<rect x="60" y="96"  width="280" height="36" rx="3" class="ps-layer ps-layer--py" />
+<text x="200" y="119" class="ps-layer-name">numpy/  <tspan class="ps-layer-sub">.py + .cpython-….so</tspan></text>
+<rect x="60" y="140" width="280" height="64" rx="3" class="ps-layer ps-layer--native" />
+<text x="200" y="159" class="ps-layer-name">numpy.libs/</text>
+<text x="200" y="177" class="ps-layer-sub">libscipy_openblas….so &#160; ≈ 36 MB</text>
+<text x="200" y="194" class="ps-layer-sub">libgfortran….so &#160; libquadmath….so</text>
+<rect x="60" y="212" width="280" height="26" rx="3" class="ps-layer ps-layer--meta" />
+<text x="200" y="229" class="ps-layer-name ps-layer-sub">numpy-2.0.0.dist-info/</text>
+<text x="200" y="262" class="ps-foot">self-contained: vendors BLAS + Fortran runtime</text>
+</g>
+
+<g v-click="2">
+<text x="680" y="22" class="ps-label">on conda-forge</text>
+<text x="680" y="40" class="ps-mono">numpy-2.0.0-py312h22e1c76_0.conda</text>
+<rect x="540" y="56" width="280" height="120" rx="6" class="ps-box ps-box--conda" />
+<text x="680" y="80" class="ps-section">the .conda</text>
+<rect x="560" y="96"  width="240" height="32" rx="3" class="ps-layer ps-layer--py" />
+<text x="680" y="117" class="ps-layer-name">site-packages/numpy/</text>
+<rect x="560" y="134" width="240" height="32" rx="3" class="ps-layer ps-layer--meta" />
+<text x="680" y="155" class="ps-layer-name ps-layer-sub">info/index.json  declares deps</text>
+</g>
+
+<g v-click="3">
+<text x="680" y="200" class="ps-foot">…and the env supplies, shared with everyone:</text>
+<g class="ps-shared">
+<rect x="540" y="216" width="65" height="26" rx="13" />
+<text x="572" y="234">libblas</text>
+<rect x="612" y="216" width="72" height="26" rx="13" />
+<text x="648" y="234">libcblas</text>
+<rect x="691" y="216" width="78" height="26" rx="13" />
+<text x="730" y="234">liblapack</text>
+<rect x="540" y="250" width="78" height="26" rx="13" />
+<text x="579" y="268">libgcc-ng</text>
+<rect x="625" y="250" width="105" height="26" rx="13" />
+<text x="678" y="268">python_abi 3.12</text>
+</g>
+<line x1="680" y1="176" x2="680" y2="208" class="ps-arrow" marker-end="url(#ps-arrow)" />
+</g>
+
+<text v-click="4" x="440" y="332" class="ps-punchline">the env is the package</text>
+</svg>
+
+</div>
+
+<style scoped>
+.pkg-shape-cap {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--tufte-muted, #888);
+  margin-top: 0.4rem;
+}
+.pkg-shape-cap code {
+  font-family: var(--tufte-mono);
+  font-style: normal;
+  font-size: 0.92em;
+  background: rgba(193, 74, 38, 0.06);
+  padding: 0 0.18em;
+  border-radius: 2px;
+}
+.pkg-shape svg { font-family: var(--tufte-serif); max-height: 22rem; }
+.pkg-shape .ps-label    { font: italic 13px "et-book", serif; fill: #555; text-anchor: middle; }
+.pkg-shape .ps-mono     { font: 11px "IBM Plex Mono", Consolas, monospace; fill: #555; text-anchor: middle; }
+.pkg-shape .ps-section  { font: italic 12px "et-book", serif; fill: #888; text-anchor: middle; }
+.pkg-shape .ps-foot     { font: italic 12px "et-book", serif; fill: #555; text-anchor: middle; }
+.pkg-shape .ps-punchline {
+  font: italic 18px "et-book", serif;
+  fill: var(--tufte-accent, #c14a26);
+  text-anchor: middle;
+  font-weight: 700;
+}
+.pkg-shape .ps-box {
+  fill: #fffff8;
+  stroke-width: 1.4;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.14));
+}
+.pkg-shape .ps-box--wheel { stroke: #333; }
+.pkg-shape .ps-box--conda { stroke: #c14a26; }
+.pkg-shape .ps-layer {
+  stroke-width: 1;
+}
+.pkg-shape .ps-layer--py     { fill: rgba(193, 74, 38, 0.05); stroke: #c14a26; stroke-opacity: 0.4; }
+.pkg-shape .ps-layer--native { fill: rgba(193, 74, 38, 0.18); stroke: #c14a26; stroke-opacity: 0.6; }
+.pkg-shape .ps-layer--meta   { fill: #f5f5ee; stroke: #aaa; }
+.pkg-shape .ps-layer-name {
+  font: 12px "IBM Plex Mono", Consolas, monospace;
+  fill: #222;
+  text-anchor: middle;
+}
+.pkg-shape .ps-layer-sub {
+  font: italic 11px "et-book", serif;
+  fill: #777;
+}
+.pkg-shape .ps-shared rect {
+  fill: #fffff8;
+  stroke: #c14a26;
+  stroke-width: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+.pkg-shape .ps-shared text {
+  font: 11px "IBM Plex Mono", Consolas, monospace;
+  fill: var(--tufte-accent, #c14a26);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.pkg-shape .ps-arrow {
+  stroke: #c14a26;
+  stroke-width: 1.4;
+  fill: none;
+}
+.pkg-shape g.slidev-vclick-target { transition: opacity 350ms ease-out; }
+.pkg-shape g.slidev-vclick-hidden { opacity: 0; }
+</style>
+
+<!--
+Build LEFT (wheel) first so the audience pictures the familiar shape,
+then RIGHT (conda) as a slimmer box, then reveal the env-shared libs
+underneath, then drop the punchline. pytorch follows the same pattern
+(depends on libcblas, liblapack, libprotobuf, sleef, numpy, ...).
+-->
+
+
+---
+
 # So what is conda-forge?!
 
 <img v-click="[1, 5]" src="/conda-forge.png" class="absolute right-12 w-64" alt="conda-forge" />
@@ -1131,7 +1273,8 @@ $ pixi update                 # bump the lock
 </div>
 
 <div v-click="[3, 4]" class="panel">
-<div class="caption later">i'll show this later…</div>
+<!--<div class="caption">warm-cache <code>pytorch</code> install — pixi vs micromamba vs conda</div>-->
+<img src="./assets/bench-pytorch.svg" class="w-full" alt="pytorch install benchmark: pixi 3.25s vs micromamba 13.81s vs conda 15.62s" />
 </div>
 
 <div v-click="4" class="panel">
@@ -1180,7 +1323,7 @@ dev     = { cmd = "pnpm exec slidev --open",
 
 ---
 
-# Aside: Universal Package Manager Concepts
+# Universal Package Manager Concepts
 
 
 <div class="universals" :class="`step-${$clicks}`">
@@ -1338,31 +1481,62 @@ src: ./pages/converting-to-rust.md
 
 # Resolvo, our SAT Solver
 
-<div class="grid grid-cols-12 gap-6 mt-2 items-start">
+<img src="/logos/paxton-juggler.png" alt="resolvo" class="absolute right-12 top-8 w-20 drop-shadow-md" />
 
-<div class="col-span-7">
+<div class="solver-flow mt-2">
 
-<v-clicks>
+<svg viewBox="0 0 880 170" class="w-full" preserveAspectRatio="xMidYMid meet">
+<defs>
+<marker id="rs-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#c14a26" />
+</marker>
+<marker id="rs-back-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#888" />
+</marker>
+</defs>
 
-- A CDCL SAT solver, started as a port of `libsolv`.
-- Made *generic*, so it knows nothing about conda, PyPI, RPM, etc.
-- Already powering: `pixi` & `rattler` (conda), `resolvo-rpm` *experimental* (Fedora).
-- Async, multithreaded, lazy: only fetches metadata it actually needs.
-- Outputs *human-readable* error messages, not just "unsatisfiable".
+<text x="115" y="20" class="rs-cap">request</text>
+<rect x="20" y="32" width="190" height="110" rx="6" class="rs-box" />
+<text x="115" y="60" class="rs-row">numpy &gt;=2.0</text>
+<text x="115" y="84" class="rs-row">scipy &gt;=1.13</text>
+<text x="115" y="108" class="rs-row">python 3.12.*</text>
 
-</v-clicks>
+<line x1="216" y1="87" x2="288" y2="87" class="rs-arrow" marker-end="url(#rs-arrow)" />
 
-</div>
+<text x="440" y="20" class="rs-cap">resolvo</text>
+<rect x="294" y="32" width="292" height="110" rx="6" class="rs-box rs-box--solver" />
 
-<div class="col-span-5 flex justify-center">
-  <img src="/logos/paxton-juggler.png" alt="resolvo" class="w-28 drop-shadow-md" />
-</div>
+<text x="440" y="50" class="rs-search-cap">Package Resolution</text>
+
+<text x="318" y="75" class="rs-search-step rs-search-step--ok">2.</text>
+<text x="395" y="75" class="rs-search-node rs-search-node--ok">scipy 1.13</text>
+<text x="448" y="75" class="rs-search-arrow-tok">→</text>
+<text x="498" y="75" class="rs-search-node rs-search-node--ok">numpy 2.0.2</text>
+<text x="563" y="75" class="rs-search-mark rs-search-mark--ok">✓</text>
+
+<path d="M 308 110 C 295 100, 295 90, 310 82" class="rs-search-backtrack" marker-end="url(#rs-back-arrow)" fill="none" />
+<text x="358" y="97" class="rs-search-tag">↺ backtrack</text>
+
+<text x="318" y="120" class="rs-search-step rs-search-step--fail">1.</text>
+<text x="395" y="120" class="rs-search-node rs-search-node--fail">scipy 1.14</text>
+<text x="475" y="120" class="rs-search-mark rs-search-mark--fail">✗ conflict</text>
+
+<line x1="592" y1="87" x2="664" y2="87" class="rs-arrow" marker-end="url(#rs-arrow)" />
+
+<text x="765" y="20" class="rs-cap">a consistent set</text>
+<rect x="670" y="32" width="190" height="110" rx="6" class="rs-box rs-box--out" />
+<text x="765" y="60" class="rs-row rs-row--picked">numpy 2.0.2</text>
+<text x="765" y="84" class="rs-row rs-row--picked">scipy 1.13.1</text>
+<text x="765" y="108" class="rs-row rs-row--picked">python 3.12.7</text>
+
+<text x="440" y="162" class="rs-foot">…that's the job. now: how do you make it ecosystem-agnostic?</text>
+</svg>
 
 </div>
 
 <div class="grid grid-cols-12 gap-6 mt-2">
 
-<div v-click="6" class="col-span-7 trait-snippet">
+<div v-click="1" class="col-span-7 trait-snippet">
 
 <div class="snippet-cap">the whole interface, in one trait</div>
 
@@ -1384,7 +1558,7 @@ trait DependencyProvider: Interner {
 
 </div>
 
-<div v-click="7" class="col-span-5 conda-glue self-end">
+<div v-click="2" class="col-span-5 conda-glue self-end">
 
 <div class="snippet-cap">conda support is just an <code>impl</code> of that trait, in <code>rattler_solve</code>:</div>
 
@@ -1403,6 +1577,64 @@ impl Interner
 </div>
 
 <style scoped>
+.resolvo-credit {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tufte-muted, #888);
+  margin-top: 0.4rem;
+}
+.resolvo-credit code {
+  font-family: var(--tufte-mono);
+  font-style: normal;
+  font-size: 0.92em;
+  background: rgba(193, 74, 38, 0.06);
+  padding: 0 0.18em;
+  border-radius: 2px;
+}
+.solver-flow svg { font-family: var(--tufte-serif); max-height: 9rem; }
+.solver-flow .rs-cap { font: italic 12px "et-book", serif; fill: #888; text-anchor: middle; }
+.solver-flow .rs-box {
+  fill: #fffff8;
+  stroke: #333;
+  stroke-width: 1.4;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.14));
+}
+.solver-flow .rs-box--solver { stroke: #c14a26; }
+.solver-flow .rs-box--out    { stroke: #333; }
+.solver-flow .rs-row {
+  font: 13px "IBM Plex Mono", Consolas, monospace;
+  fill: #222;
+  text-anchor: middle;
+}
+.solver-flow .rs-row--picked { fill: var(--tufte-accent, #c14a26); }
+.solver-flow .rs-foot        { font: italic 12px "et-book", serif; fill: #555; text-anchor: middle; }
+.solver-flow .rs-arrow {
+  stroke: #c14a26;
+  stroke-width: 1.6;
+  fill: none;
+}
+.solver-flow .rs-search-cap   { font: italic 11.5px "et-book", serif; fill: #888; text-anchor: middle; }
+.solver-flow .rs-search-step       { font: bold 11.5px "et-book", serif; text-anchor: end; }
+.solver-flow .rs-search-step--fail { fill: #888; }
+.solver-flow .rs-search-step--ok   { fill: var(--tufte-accent, #c14a26); }
+.solver-flow .rs-search-node       { font: 11.5px "IBM Plex Mono", Consolas, monospace; text-anchor: middle; }
+.solver-flow .rs-search-node--fail { fill: #888; text-decoration: line-through; }
+.solver-flow .rs-search-node--ok   { fill: var(--tufte-accent, #c14a26); }
+.solver-flow .rs-search-mark       { font: 12px "IBM Plex Mono", Consolas, monospace; text-anchor: middle; }
+.solver-flow .rs-search-mark--fail { fill: #888; font-style: italic; }
+.solver-flow .rs-search-mark--ok   { fill: #2a8c3e; font: 14px serif; }
+.solver-flow .rs-search-arrow-tok  { font: 12px "IBM Plex Mono", Consolas, monospace; fill: var(--tufte-accent, #c14a26); text-anchor: middle; }
+.solver-flow .rs-search-backtrack {
+  stroke: #888;
+  stroke-width: 1.2;
+  fill: none;
+}
+.solver-flow .rs-search-tag {
+  font: italic 10px "et-book", serif;
+  fill: #888;
+  text-anchor: start;
+}
 .trait-snippet :deep(pre), .conda-glue :deep(pre) {
   font-size: 0.72rem !important;
   line-height: 1.4 !important;
