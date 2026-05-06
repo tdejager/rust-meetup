@@ -320,148 +320,6 @@ Frame conda as a generic native-package system. The talk's earlier
 
 ---
 
-# What's actually inside the package?
-
-<div class="pkg-shape-cap">the <em>same</em> library, two ecosystems &mdash; <code>numpy 2.0.0</code></div>
-
-<div class="pkg-shape mt-2 relative">
-
-<svg viewBox="0 0 880 360" class="w-full" preserveAspectRatio="xMidYMid meet">
-<defs>
-<marker id="ps-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
-<path d="M 0 0 L 10 5 L 0 10 z" fill="#c14a26" />
-</marker>
-</defs>
-
-<g v-click="1">
-<text x="200" y="22" class="ps-label">on PyPI</text>
-<text x="200" y="40" class="ps-mono">numpy-2.0.0-cp312-…-linux_x86_64.whl</text>
-<rect x="40" y="56" width="320" height="220" rx="6" class="ps-box ps-box--wheel" />
-<text x="200" y="80" class="ps-section">the wheel (a zip)</text>
-<rect x="60" y="96"  width="280" height="36" rx="3" class="ps-layer ps-layer--py" />
-<text x="200" y="119" class="ps-layer-name">numpy/  <tspan class="ps-layer-sub">.py + .cpython-….so</tspan></text>
-<rect x="60" y="140" width="280" height="64" rx="3" class="ps-layer ps-layer--native" />
-<text x="200" y="159" class="ps-layer-name">numpy.libs/</text>
-<text x="200" y="177" class="ps-layer-sub">libscipy_openblas….so &#160; ≈ 36 MB</text>
-<text x="200" y="194" class="ps-layer-sub">libgfortran….so &#160; libquadmath….so</text>
-<rect x="60" y="212" width="280" height="26" rx="3" class="ps-layer ps-layer--meta" />
-<text x="200" y="229" class="ps-layer-name ps-layer-sub">numpy-2.0.0.dist-info/</text>
-<text x="200" y="262" class="ps-foot">self-contained: vendors BLAS + Fortran runtime</text>
-</g>
-
-<g v-click="2">
-<text x="680" y="22" class="ps-label">on conda-forge</text>
-<text x="680" y="40" class="ps-mono">numpy-2.0.0-py312h22e1c76_0.conda</text>
-<rect x="540" y="56" width="280" height="120" rx="6" class="ps-box ps-box--conda" />
-<text x="680" y="80" class="ps-section">the .conda</text>
-<rect x="560" y="96"  width="240" height="32" rx="3" class="ps-layer ps-layer--py" />
-<text x="680" y="117" class="ps-layer-name">site-packages/numpy/</text>
-<rect x="560" y="134" width="240" height="32" rx="3" class="ps-layer ps-layer--meta" />
-<text x="680" y="155" class="ps-layer-name ps-layer-sub">info/index.json  declares deps</text>
-</g>
-
-<g v-click="3">
-<text x="680" y="200" class="ps-foot">…and the env supplies, shared with everyone:</text>
-<g class="ps-shared">
-<rect x="540" y="216" width="65" height="26" rx="13" />
-<text x="572" y="234">libblas</text>
-<rect x="612" y="216" width="72" height="26" rx="13" />
-<text x="648" y="234">libcblas</text>
-<rect x="691" y="216" width="78" height="26" rx="13" />
-<text x="730" y="234">liblapack</text>
-<rect x="540" y="250" width="78" height="26" rx="13" />
-<text x="579" y="268">libgcc-ng</text>
-<rect x="625" y="250" width="105" height="26" rx="13" />
-<text x="678" y="268">python_abi 3.12</text>
-</g>
-<line x1="680" y1="176" x2="680" y2="208" class="ps-arrow" marker-end="url(#ps-arrow)" />
-</g>
-
-<text v-click="4" x="440" y="332" class="ps-punchline">the env is the package</text>
-</svg>
-
-</div>
-
-<style scoped>
-.pkg-shape-cap {
-  font-family: var(--tufte-serif);
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--tufte-muted, #888);
-  margin-top: 0.4rem;
-}
-.pkg-shape-cap code {
-  font-family: var(--tufte-mono);
-  font-style: normal;
-  font-size: 0.92em;
-  background: rgba(193, 74, 38, 0.06);
-  padding: 0 0.18em;
-  border-radius: 2px;
-}
-.pkg-shape svg { font-family: var(--tufte-serif); max-height: 22rem; }
-.pkg-shape .ps-label    { font: italic 13px "et-book", serif; fill: #555; text-anchor: middle; }
-.pkg-shape .ps-mono     { font: 11px "IBM Plex Mono", Consolas, monospace; fill: #555; text-anchor: middle; }
-.pkg-shape .ps-section  { font: italic 12px "et-book", serif; fill: #888; text-anchor: middle; }
-.pkg-shape .ps-foot     { font: italic 12px "et-book", serif; fill: #555; text-anchor: middle; }
-.pkg-shape .ps-punchline {
-  font: italic 18px "et-book", serif;
-  fill: var(--tufte-accent, #c14a26);
-  text-anchor: middle;
-  font-weight: 700;
-}
-.pkg-shape .ps-box {
-  fill: #fffff8;
-  stroke-width: 1.4;
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.14));
-}
-.pkg-shape .ps-box--wheel { stroke: #333; }
-.pkg-shape .ps-box--conda { stroke: #c14a26; }
-.pkg-shape .ps-layer {
-  stroke-width: 1;
-}
-.pkg-shape .ps-layer--py     { fill: rgba(193, 74, 38, 0.05); stroke: #c14a26; stroke-opacity: 0.4; }
-.pkg-shape .ps-layer--native { fill: rgba(193, 74, 38, 0.18); stroke: #c14a26; stroke-opacity: 0.6; }
-.pkg-shape .ps-layer--meta   { fill: #f5f5ee; stroke: #aaa; }
-.pkg-shape .ps-layer-name {
-  font: 12px "IBM Plex Mono", Consolas, monospace;
-  fill: #222;
-  text-anchor: middle;
-}
-.pkg-shape .ps-layer-sub {
-  font: italic 11px "et-book", serif;
-  fill: #777;
-}
-.pkg-shape .ps-shared rect {
-  fill: #fffff8;
-  stroke: #c14a26;
-  stroke-width: 1;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
-}
-.pkg-shape .ps-shared text {
-  font: 11px "IBM Plex Mono", Consolas, monospace;
-  fill: var(--tufte-accent, #c14a26);
-  text-anchor: middle;
-  dominant-baseline: middle;
-}
-.pkg-shape .ps-arrow {
-  stroke: #c14a26;
-  stroke-width: 1.4;
-  fill: none;
-}
-.pkg-shape g.slidev-vclick-target { transition: opacity 350ms ease-out; }
-.pkg-shape g.slidev-vclick-hidden { opacity: 0; }
-</style>
-
-<!--
-Build LEFT (wheel) first so the audience pictures the familiar shape,
-then RIGHT (conda) as a slimmer box, then reveal the env-shared libs
-underneath, then drop the punchline. pytorch follows the same pattern
-(depends on libcblas, liblapack, libprotobuf, sleef, numpy, ...).
--->
-
-
----
-
 # So what is conda-forge?!
 
 <img v-click="[1, 5]" src="/conda-forge.png" class="absolute right-12 w-64" alt="conda-forge" />
@@ -1216,113 +1074,6 @@ requirements:
 
 ---
 
-# What did we Need, 
-### &nbsp;&nbsp;&nbsp;&nbsp; and what did we end up with
-
-<div class="grid grid-cols-2 gap-8 mt-4">
-
-<div>
-
-<v-clicks>
-
-- Isolated Environments.
-- Ease of Use.
-- Fast.
-- Tries to Always keep Environment up-to-date.
-
-</v-clicks>
-
-</div>
-
-<div class="needs-panels relative">
-
-<div v-click="[1, 2]" class="panel">
-<div class="caption">an isolated env, scoped to the project</div>
-<FileTree
-  rootLabel="my-project/"
-  :tree="[
-    { name: 'pixi.toml', type: 'file' },
-    { name: 'pixi.lock', type: 'file' },
-    { name: 'src', type: 'dir' },
-    { name: '.pixi', type: 'dir', comment: 'lives next to your code', children: [
-      { name: 'envs', type: 'dir', children: [
-        { name: 'default', type: 'dir', children: [
-          { name: 'bin', type: 'dir' },
-          { name: 'lib', type: 'dir' },
-          { name: 'conda-meta', type: 'dir' },
-        ]},
-        { name: 'test', type: 'dir', comment: 'feature-based, on demand' },
-      ]},
-    ]},
-  ]"
-/>
-</div>
-
-<div v-click="[2, 3]" class="panel">
-<div class="caption">just a few commands cover the common cases</div>
-
-```bash
-$ pixi init my-project        # new workspace
-$ pixi add python pytest      # add deps
-$ pixi add --pypi httpx       # pypi works too
-$ pixi run test               # run a task
-$ pixi shell                  # activate env
-$ pixi update                 # bump the lock
-```
-
-</div>
-
-<div v-click="[3, 4]" class="panel">
-<!--<div class="caption">warm-cache <code>pytorch</code> install — pixi vs micromamba vs conda</div>-->
-<img src="./assets/bench-pytorch.svg" class="w-full" alt="pytorch install benchmark: pixi 3.25s vs micromamba 13.81s vs conda 15.62s" />
-</div>
-
-<div v-click="4" class="panel">
-
-```toml {all|1-3|5-8|7|all}
-[dependencies]
-pnpm    = "*"
-nodejs  = "*"
-
-[tasks]
-install = { cmd = "pnpm install --frozen-lockfile" }
-dev     = { cmd = "pnpm exec slidev --open",
-            # This forces an install first
-            depends-on = ["install"] }
-```
-
-</div>
-
-</div>
-
-</div>
-
-<style scoped>
-.needs-panels { min-height: 22rem; }
-.panel { position: absolute; inset: 0; }
-.panel .caption {
-  font-family: var(--tufte-serif);
-  font-style: italic;
-  font-size: 0.85rem;
-  color: var(--tufte-muted, #888);
-  margin-bottom: 0.6rem;
-}
-.panel .caption code {
-  font-family: var(--tufte-mono);
-  font-style: normal;
-  font-size: 0.85em;
-  background: rgba(193, 74, 38, 0.06);
-  padding: 0 0.2em;
-  border-radius: 2px;
-}
-.panel .caption.later {
-  font-size: 1rem;
-  color: var(--tufte-accent, #c14a26);
-}
-</style>
-
----
-
 # Universal Package Manager Concepts
 
 
@@ -1851,6 +1602,138 @@ impl Interner
 .rb-role     { font: italic 11px "et-book", serif; fill: #555; text-anchor: middle; }
 .rb-arrow    { stroke: #c14a26; stroke-width: 1.6; fill: none; }
 </style>
+
+---
+
+# What did we Need, 
+### &nbsp;&nbsp;&nbsp;&nbsp; and what did we end up with
+
+<div class="grid grid-cols-2 gap-8 mt-4">
+
+<div>
+
+<v-clicks>
+
+- Isolated Environments.
+- Ease of Use.
+- Fast.
+- Tries to Always keep Environment up-to-date.
+
+</v-clicks>
+
+</div>
+
+<div class="needs-panels relative">
+
+<div v-click="[1, 2]" class="panel">
+<div class="caption">an isolated env, scoped to the project</div>
+<FileTree
+  rootLabel="my-project/"
+  :tree="[
+    { name: 'pixi.toml', type: 'file' },
+    { name: 'pixi.lock', type: 'file' },
+    { name: 'src', type: 'dir' },
+    { name: '.pixi', type: 'dir', comment: 'lives next to your code', children: [
+      { name: 'envs', type: 'dir', children: [
+        { name: 'default', type: 'dir', children: [
+          { name: 'bin', type: 'dir' },
+          { name: 'lib', type: 'dir' },
+          { name: 'conda-meta', type: 'dir' },
+        ]},
+        { name: 'test', type: 'dir', comment: 'feature-based, on demand' },
+      ]},
+    ]},
+  ]"
+/>
+</div>
+
+<div v-click="[2, 3]" class="panel">
+<div class="caption">just a few commands cover the common cases</div>
+
+```bash
+$ pixi init my-project        # new workspace
+$ pixi add python pytest      # add deps
+$ pixi add --pypi httpx       # pypi works too
+$ pixi run test               # run a task
+$ pixi shell                  # activate env
+$ pixi update                 # bump the lock
+```
+
+</div>
+
+<div v-click="[3, 4]" class="panel">
+<!--<div class="caption">warm-cache <code>pytorch</code> install — pixi vs micromamba vs conda</div>-->
+<img src="./assets/bench-pytorch.svg" class="w-full" alt="pytorch install benchmark: pixi 1.12s vs micromamba 12.02s vs conda 14.25s" />
+</div>
+
+<div v-click="4" class="panel">
+
+```toml {all|1-3|5-8|7|all}
+[dependencies]
+pnpm    = "*"
+nodejs  = "*"
+
+[tasks]
+install = { cmd = "pnpm install --frozen-lockfile" }
+dev     = { cmd = "pnpm exec slidev --open",
+            # This forces an install first
+            depends-on = ["install"] }
+```
+
+</div>
+
+</div>
+
+</div>
+
+<style scoped>
+.needs-panels { min-height: 22rem; }
+.panel { position: absolute; inset: 0; }
+.panel .caption {
+  font-family: var(--tufte-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tufte-muted, #888);
+  margin-bottom: 0.6rem;
+}
+.panel .caption code {
+  font-family: var(--tufte-mono);
+  font-style: normal;
+  font-size: 0.85em;
+  background: rgba(193, 74, 38, 0.06);
+  padding: 0 0.2em;
+  border-radius: 2px;
+}
+.panel .caption.later {
+  font-size: 1rem;
+  color: var(--tufte-accent, #c14a26);
+}
+</style>
+
+
+---
+
+# Why so fast?
+
+<div class="text-left mt-4">
+<v-clicks>
+
+- **`Rattler`**. Parallel download, extract and link, bounded by an IO semaphore.
+- **`Rattler`**. Reflinks first, then hardlinks, then copy. Fresh envs cost almost nothing.
+- **`Rattler`**. Sparse `.conda` fetches over HTTP range requests. Often skip the full archive.
+- **`Rattler`**. Sharded `zstd` repodata, conditional GET. Warm start is nearly free.
+- **`Resolvo`**. Lazy CDCL solving. Only fetches metadata for packages it actually considers.
+
+</v-clicks>
+</div>
+
+<div v-click class="text-center mt-8 text-[var(--tufte-accent,#c14a26)]">
+<em>Owning the stack means every layer can pull its weight.</em>
+</div>
+
+<!--
+Verified in the source: rattler `crates/rattler/src/install/installer/mod.rs` (FuturesUnordered, IO semaphore), `link.rs` (LinkMethod::Reflink/Hardlink/Copy + memmap2 prefix patch), `package_streaming/src/reqwest/sparse.rs` (range requests), `repodata_gateway/src/gateway/sharded_subdir/` (sharded zstd msgpack), resolvo `src/solver/` (CDCL/watched-literals/VSIDS) + lazy DependencyProvider.
+-->
 
 ---
 layout: center

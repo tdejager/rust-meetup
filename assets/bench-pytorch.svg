@@ -1,29 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 384">
 <style>.title { font: italic 22px Georgia, "et-book", serif; fill: #111; }.sub   { font: 12px "IBM Plex Mono", Consolas, monospace; fill: #555; }.label { font: italic 18px Georgia, "et-book", serif; fill: #111; text-anchor: end; }.value { font: italic 16px Georgia, "et-book", serif; fill: #111; }.range { font: 11px "IBM Plex Mono", Consolas, monospace; fill: #555; }.axis  { stroke: #333; stroke-width: 1; }.bar   { fill: #c14a26; }.tick  { font: 10px "IBM Plex Mono", Consolas, monospace; fill: #555; text-anchor: middle; }</style>
 <rect x="0" y="0" width="900" height="384" fill="#fffff8" />
-<text class="title" x="40" y="42">pytorch install with warm cache</text>
-<text class="sub" x="40" y="64">osx-arm64 M5 · 5 runs, fresh env each time</text>
+<text class="title" x="40" y="42">pytorch install, warm cache</text>
+<text class="sub" x="40" y="64">python 3.11, osx-arm64, 10 runs into a fresh env</text>
 <text class="label" x="186" y="135.0">pixi</text>
-<rect class="bar" x="200" y="117.0" width="129.2" height="24" />
-<text class="value" x="339.2" y="134.0">3.25 s</text>
-<text class="range" x="200" y="157.0">σ=0.03 s · min 3.21 s · max 3.29 s</text>
+<rect class="bar" x="200" y="117.0" width="48.7" height="24" />
+<text class="value" x="258.7" y="134.0">1.12 s</text>
+<text class="range" x="200" y="157.0">σ=0.02s, min 1.09 s, max 1.15 s</text>
 <text class="label" x="186" y="213.0">micromamba</text>
-<rect class="bar" x="200" y="195.0" width="548.4" height="24" />
-<text class="value" x="758.4" y="212.0">13.81 s</text>
-<text class="range" x="200" y="235.0">σ=0.16 s · min 13.55 s · max 13.93 s</text>
+<rect class="bar" x="200" y="195.0" width="523.0" height="24" />
+<text class="value" x="733.0" y="212.0">12.02 s</text>
+<text class="range" x="200" y="235.0">σ=0.34s, min 11.63 s, max 12.56 s</text>
 <text class="label" x="186" y="291.0">conda</text>
 <rect class="bar" x="200" y="273.0" width="620.0" height="24" />
-<text class="value" x="830.0" y="290.0">15.62 s</text>
-<text class="range" x="200" y="313.0">σ=0.16 s · min 15.42 s · max 15.81 s</text>
+<text class="value" x="830.0" y="290.0">14.25 s</text>
+<text class="range" x="200" y="313.0">σ=0.80s, min 13.55 s, max 15.91 s</text>
 <line class="axis" x1="200" y1="322" x2="820" y2="322" />
 <line class="axis" x1="200.0" y1="322" x2="200.0" y2="327" />
 <text class="tick" x="200.0" y="340">0s</text>
 <line class="axis" x1="355.0" y1="322" x2="355.0" y2="327" />
 <text class="tick" x="355.0" y="340">4s</text>
 <line class="axis" x1="510.0" y1="322" x2="510.0" y2="327" />
-<text class="tick" x="510.0" y="340">8s</text>
+<text class="tick" x="510.0" y="340">7s</text>
 <line class="axis" x1="665.0" y1="322" x2="665.0" y2="327" />
-<text class="tick" x="665.0" y="340">12s</text>
+<text class="tick" x="665.0" y="340">11s</text>
 <line class="axis" x1="820.0" y1="322" x2="820.0" y2="327" />
-<text class="tick" x="820.0" y="340">16s</text>
+<text class="tick" x="820.0" y="340">14s</text>
 </svg>
