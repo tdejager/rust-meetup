@@ -76,7 +76,7 @@ layout: center
 - Working on package managers is a great enabler
 - Both algorithmic and more engineering problems
 - People are generally quite grateful
-- Active discord around ~250 members
+- Active discord around ~250 online total of 2500 members
 
 </v-clicks>
 
